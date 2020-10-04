@@ -1,0 +1,21 @@
+{
+  "name": "tutorial",
+  "version": "1.0.0",
+  "description": "Deploying react application to heroku",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "build": "parcel build src/index.html",
+    "heroku-postbuild": "parcel build src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Deploy",
+    "react",
+    "heroku",
+    "parcel",
+    "javascript"
+  ],
+  "author": "neltoby",
+  "license": "ISC"
+}
