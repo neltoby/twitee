@@ -144,7 +144,6 @@ export default () => {
                         dispatch(actionCreator(LOGGEDIN))
                         dispatch(actionCreator(USER_DETAILS, resp))
                     }).catch(function(err) {
-                        console.log(err);
                         // implement saving to localStorage 
                     })                    
                 }

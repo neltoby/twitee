@@ -12,8 +12,6 @@ export const useGlobalStore = () => React.useContext(Store)
 
 // retrieve token from cookie
 const token = cookies.get('twit_token')
-console.log(token, 'from token value')
-// cookies.remove('twit_token')
 
 const initialState = {
     LoggedIn: token !== null && token !== undefined ? LOGGEDIN : LOGGEDOUT , 

@@ -10,8 +10,6 @@ import ErrorBoundary from '../ErrorBoundary'
 
 const App = () => {
     const { LoggedIn } = useGlobalStore().state
-    console.log(LoggedIn)
-    console.log(useGlobalStore().state)
 
     return (
         <Router>

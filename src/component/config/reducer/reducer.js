@@ -14,7 +14,6 @@ import {
 } from '../actions'
 
 export const reducer = (state, action) => {
-    console.log(action.type)
     switch(action.type){        
         case LOGGEDIN: {
             return produce(state, draft => {
@@ -23,7 +22,7 @@ export const reducer = (state, action) => {
         }
         case LOGGEDOUT: {
             return produce(state, draft => {
-                draft.LOGGEDOUT = LOGGEDOUT
+                draft.LoggedIn = LOGGEDOUT
             })
         }
         case USER_DETAILS: {
@@ -50,7 +49,6 @@ export const reducer = (state, action) => {
         case LIKE_POST: {
             return produce(state, draft => {
                 const { UserId, PostId } = action.payload
-                console.log(action.payload)
                 draft.Post = state.Post.map((item, i) => {
                     if(item.id === PostId){
                         const copyObj = JSON.parse(JSON.stringify(item))
@@ -71,7 +69,6 @@ export const reducer = (state, action) => {
                         const copyObj = JSON.parse(JSON.stringify(item))
                         const likes = copyObj.Likes.filter(obj => obj.UserId !== userId)
                         copyObj.Likes = likes
-                        console.log(copyObj)
                         return copyObj
                     }else{ 
                         return item
@@ -83,12 +80,6 @@ export const reducer = (state, action) => {
             return produce(state, draft => {
                 const { userId, postId } = action.payload
                 const newArr = state.Post.slice().filter(item => item.id !== postId)
-                // state.Post.slice().forEach(item => {
-                //     if(item.id !== postId){
-                //         newArr.push(item)
-                //     }
-                // })
-                console.log(newArr)
                 draft.Post = newArr
             })
         }
@@ -100,7 +91,6 @@ export const reducer = (state, action) => {
                         const copyObj = JSON.parse(JSON.stringify(item))
                         const comment = [action.payload,...copyObj.Comments]
                         copyObj.Comments = comment 
-                        console.log(copyObj)
                         return copyObj
                     }else{
                         return item

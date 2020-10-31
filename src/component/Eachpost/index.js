@@ -18,16 +18,23 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: 0,
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       alignItems: 'center',
-      width: '100%'
     },
     textfield: {
         marginBottom: 10,
     },
     likes: {
         display: 'flex',
-        justifyItems: 'space-evenly'
+        width: '100%',
+        justifyContent: 'space-between',
+    }, 
+    content: {
+        width: '100%'
+    },
+    margintop: {
+        width: '100%',
+        marginTop: 15
     }
 }));
 
@@ -42,7 +49,6 @@ export default (props) => {
     const [comment, setComment] = useState('')
     const dateConfig = new Date(createdAt)
     const likes = Likes.find(arr => arr.UserId === userId)
-    const commentName = Comment[0] ? isJson(Comment[0]) : null 
     const onChange = e => {
         setComment(e.target.value)
     }
@@ -53,72 +59,84 @@ export default (props) => {
             dispatch(commentPost({postid: id, comment}))
             setComment('')
         }else{
-            console.log('post cannot be empty')
         }
     }
     const unlike = () => {
-        console.log('unlikw was called')
         dispatch(unlikeUpdate({userId, postId: id}))
     }
     const likeFxn = () => {
-        console.log('likw was called')
         dispatch(likeUpdate(id))
     }
     const delPost =() => {
         dispatch(deletePost({userId , postId: id}))
     }
     return (
+        <>
         <Grid container className={classes.paper}>
-            <Grid item xs={2} >
+            <Grid item xl={2} lg={2} md={2} xs={2} >
                 <AccountCircle />
             </Grid>
-            <Grid item xs={8} className={classes.header}>
+            <Grid item container xl={10} lg={10} md={10} xs={10} className={classes.header}>
                 <Typography component='div' className={classes.content}>
-                    <p>
-                        {name}
-                    </p>
-                    <p>{posts}</p>
-                    <div className={classes.likes}>
-                        {likes === undefined ? <span onClick={likeFxn}><FavoriteBorderIcon style={{ color: '#777' }} /></span> : <span onClick={unlike}> <FavoriteIcon style={{ color: 'red' }} /></span>}
-                        <span>{Likes.length > 1 ? `${Likes.length} likes` : `${Likes.length} like` } </span>
-                        <span>{Comment.length > 1 ? `${Comment.length} comments` : `${Comment.length} comment` }</span>
-                        {userId === UserId ? <span onClick={delPost}><DeleteIcon /></span> : null}
+                    <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+                        <span style={{fontWeight: 'bold'}}>{name}</span>
+                        <span>{dateConfig.toDateString()}</span>
                     </div>
                 </Typography>
-                <Typography component='div' className={classes.content}>
-                    <form className={classes.form} onSubmit={onSubmit}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="comment"
-                            type="text"
-                            label="Comment..."
-                            name="comment"
-                            autoComplete="comment"
-                            onChange = {onChange}
-                            value = {comment}
-                            className={classes.textfield}
-                        />
-                        {
-                            commentName !== null ? <CommentComp name={isJson(commentName.User).name} comment={commentName.comment} /> : null 
-                        }
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            data-testid='submit-button'
-                        >
-                            Comment
-                        </Button>
-                    </form>
-                </Typography>
-            </Grid>
-            <Grid item xs={1} className={classes.header}>
-                <div className={classes.head}></div>
             </Grid>
         </Grid>
+        <Grid container className={classes.margintop}>
+        <Grid item xl={2} lg={2} md={2} xs={2} >
+        </Grid>
+        <Grid item container xl={10} lg={10} md={10} xs={10} className={classes.header}>
+            <Typography component='div' className={classes.content}>
+                <p>{posts}</p>
+                <div className={classes.likes}>
+                    {likes === undefined ? <span onClick={likeFxn}><FavoriteBorderIcon style={{ color: '#777' }} />
+                    {Likes.length > 1 ? `${Likes.length} likes` : `${Likes.length} like` }
+                    </span> : <span onClick={unlike}> <FavoriteIcon style={{ color: 'red' }} />
+                    {Likes.length > 1 ? `${Likes.length} likes` : `${Likes.length} like` }
+                    </span>}                   
+                    <span>{Comment.length > 1 ? `${Comment.length} comments` : `${Comment.length} comment` }</span>
+                    {userId === UserId ? <span onClick={delPost}><DeleteIcon /></span> : null}
+                </div>
+            </Typography>
+            <Typography component='div' className={classes.content}>
+                {
+                    Comment.map((item, i) => {
+                        let commentName = isJson(item)
+                        let date = new Date(commentName.createdAt).toDateString()
+                        return <CommentComp key={i} name={isJson(commentName.User).name} comment={commentName.comment} date={date} />
+                    })
+                }
+                <form className={classes.form} onSubmit={onSubmit}>
+                    <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="comment"
+                        type="text"
+                        label="Comment..."
+                        name="comment"
+                        autoComplete="comment"
+                        onChange = {onChange}
+                        value = {comment}
+                        className={classes.textfield}
+                    />                       
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        data-testid='submit-button'
+                    >
+                        Comment
+                    </Button>
+                </form>
+            </Typography>
+        </Grid>
+    </Grid>
+    </>
     )
 }

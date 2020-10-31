@@ -1,4 +1,4 @@
-export const domain = 'http://localhost:8000/'
+export const domain = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/' : 'https://twitees.herokuapp.com/'
 
 
 export default function isJson (item) {

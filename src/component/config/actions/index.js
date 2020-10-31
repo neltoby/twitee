@@ -57,7 +57,6 @@ export const userDetails = () => {
                 localforage.setItem('user', resp).then(function(value) {
                     dispatch(actionCreator(USER_DETAILS, resp))
                 }).catch(function(err) {
-                    console.log(err);
                     // implement saving to localStorage 
                 });
             })
@@ -73,7 +72,6 @@ export const userDetails = () => {
 export const likeUpdate = (postId) => {
     return dispatch => {
         (() => {
-            console.log('like fx form action')
             const param = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -143,7 +141,6 @@ export const commentPost = ({postid, comment}) => {
                 }
             })
             .then(resp => {
-                console.log(resp)
                 dispatch(actionCreator(COMMENT, resp))
             })
             .catch(e => {

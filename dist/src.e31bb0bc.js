@@ -56051,84 +56051,814 @@ var _Box = _interopRequireWildcard(require("./Box"));
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-},{"./Box":"../node_modules/@material-ui/core/esm/Box/Box.js"}],"../node_modules/@babel/runtime/helpers/interopRequireDefault.js":[function(require,module,exports) {
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault;
-},{}],"../node_modules/@babel/runtime/helpers/extends.js":[function(require,module,exports) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-},{}],"../node_modules/@material-ui/icons/utils/createSvgIcon.js":[function(require,module,exports) {
+},{"./Box":"../node_modules/@material-ui/core/esm/Box/Box.js"}],"../node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js":[function(require,module,exports) {
 "use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = createSvgIcon;
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
-var _react = _interopRequireDefault(require("react"));
-
-var _SvgIcon = _interopRequireDefault(require("@material-ui/core/SvgIcon"));
-
-function createSvgIcon(path, displayName) {
-  var Component = _react.default.memo(_react.default.forwardRef(function (props, ref) {
-    return _react.default.createElement(_SvgIcon.default, (0, _extends2.default)({
-      ref: ref
-    }, props), path);
-  }));
-
-  if ("development" !== 'production') {
-    Component.displayName = "".concat(displayName, "Icon");
-  }
-
-  Component.muiName = _SvgIcon.default.muiName;
-  return Component;
-}
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","@babel/runtime/helpers/extends":"../node_modules/@babel/runtime/helpers/extends.js","react":"../node_modules/react/index.js","@material-ui/core/SvgIcon":"../node_modules/@material-ui/core/esm/SvgIcon/index.js"}],"../node_modules/@material-ui/icons/LockOutlined.js":[function(require,module,exports) {
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var React = _interopRequireWildcard(require("react"));
 
-var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+var ReactDOM = _interopRequireWildcard(require("react-dom"));
 
-var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
-  d: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
-}), 'LockOutlined');
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _ownerDocument = _interopRequireDefault(require("../utils/ownerDocument"));
+
+var _useForkRef = _interopRequireDefault(require("../utils/useForkRef"));
+
+var _useEventCallback = _interopRequireDefault(require("../utils/useEventCallback"));
+
+var _utils = require("@material-ui/utils");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function mapEventPropToEvent(eventProp) {
+  return eventProp.substring(2).toLowerCase();
+}
+
+function clickedRootScrollbar(event) {
+  return document.documentElement.clientWidth < event.clientX || document.documentElement.clientHeight < event.clientY;
+}
+/**
+ * Listen for click events that occur somewhere in the document, outside of the element itself.
+ * For instance, if you need to hide a menu when people click anywhere else on your page.
+ */
+
+
+function ClickAwayListener(props) {
+  var children = props.children,
+      _props$disableReactTr = props.disableReactTree,
+      disableReactTree = _props$disableReactTr === void 0 ? false : _props$disableReactTr,
+      _props$mouseEvent = props.mouseEvent,
+      mouseEvent = _props$mouseEvent === void 0 ? 'onClick' : _props$mouseEvent,
+      onClickAway = props.onClickAway,
+      _props$touchEvent = props.touchEvent,
+      touchEvent = _props$touchEvent === void 0 ? 'onTouchEnd' : _props$touchEvent;
+  var movedRef = React.useRef(false);
+  var nodeRef = React.useRef(null);
+  var mountedRef = React.useRef(false);
+  var syntheticEventRef = React.useRef(false);
+  React.useEffect(function () {
+    mountedRef.current = true;
+    return function () {
+      mountedRef.current = false;
+    };
+  }, []); // can be removed once we drop support for non ref forwarding class components
+
+  var handleOwnRef = React.useCallback(function (instance) {
+    // #StrictMode ready
+    nodeRef.current = ReactDOM.findDOMNode(instance);
+  }, []);
+  var handleRef = (0, _useForkRef.default)(children.ref, handleOwnRef); // The handler doesn't take event.defaultPrevented into account:
+  //
+  // event.preventDefault() is meant to stop default behaviours like
+  // clicking a checkbox to check it, hitting a button to submit a form,
+  // and hitting left arrow to move the cursor in a text input etc.
+  // Only special HTML elements have these default behaviors.
+
+  var handleClickAway = (0, _useEventCallback.default)(function (event) {
+    // Given developers can stop the propagation of the synthetic event,
+    // we can only be confident with a positive value.
+    var insideReactTree = syntheticEventRef.current;
+    syntheticEventRef.current = false; // 1. IE 11 support, which trigger the handleClickAway even after the unbind
+    // 2. The child might render null.
+    // 3. Behave like a blur listener.
+
+    if (!mountedRef.current || !nodeRef.current || clickedRootScrollbar(event)) {
+      return;
+    } // Do not act if user performed touchmove
+
+
+    if (movedRef.current) {
+      movedRef.current = false;
+      return;
+    }
+
+    var insideDOM; // If not enough, can use https://github.com/DieterHolvoet/event-propagation-path/blob/master/propagationPath.js
+
+    if (event.composedPath) {
+      insideDOM = event.composedPath().indexOf(nodeRef.current) > -1;
+    } else {
+      // TODO v6 remove dead logic https://caniuse.com/#search=composedPath.
+      var doc = (0, _ownerDocument.default)(nodeRef.current);
+      insideDOM = !doc.documentElement.contains(event.target) || nodeRef.current.contains(event.target);
+    }
+
+    if (!insideDOM && (disableReactTree || !insideReactTree)) {
+      onClickAway(event);
+    }
+  }); // Keep track of mouse/touch events that bubbled up through the portal.
+
+  var createHandleSynthetic = function createHandleSynthetic(handlerName) {
+    return function (event) {
+      syntheticEventRef.current = true;
+      var childrenPropsHandler = children.props[handlerName];
+
+      if (childrenPropsHandler) {
+        childrenPropsHandler(event);
+      }
+    };
+  };
+
+  var childrenProps = {
+    ref: handleRef
+  };
+
+  if (touchEvent !== false) {
+    childrenProps[touchEvent] = createHandleSynthetic(touchEvent);
+  }
+
+  React.useEffect(function () {
+    if (touchEvent !== false) {
+      var mappedTouchEvent = mapEventPropToEvent(touchEvent);
+      var doc = (0, _ownerDocument.default)(nodeRef.current);
+
+      var handleTouchMove = function handleTouchMove() {
+        movedRef.current = true;
+      };
+
+      doc.addEventListener(mappedTouchEvent, handleClickAway);
+      doc.addEventListener('touchmove', handleTouchMove);
+      return function () {
+        doc.removeEventListener(mappedTouchEvent, handleClickAway);
+        doc.removeEventListener('touchmove', handleTouchMove);
+      };
+    }
+
+    return undefined;
+  }, [handleClickAway, touchEvent]);
+
+  if (mouseEvent !== false) {
+    childrenProps[mouseEvent] = createHandleSynthetic(mouseEvent);
+  }
+
+  React.useEffect(function () {
+    if (mouseEvent !== false) {
+      var mappedMouseEvent = mapEventPropToEvent(mouseEvent);
+      var doc = (0, _ownerDocument.default)(nodeRef.current);
+      doc.addEventListener(mappedMouseEvent, handleClickAway);
+      return function () {
+        doc.removeEventListener(mappedMouseEvent, handleClickAway);
+      };
+    }
+
+    return undefined;
+  }, [handleClickAway, mouseEvent]);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.cloneElement(children, childrenProps));
+}
+
+"development" !== "production" ? ClickAwayListener.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The wrapped element.
+   */
+  children: _utils.elementAcceptingRef.isRequired,
+
+  /**
+   * If `true`, the React tree is ignored and only the DOM tree is considered.
+   * This prop changes how portaled elements are handled.
+   */
+  disableReactTree: _propTypes.default.bool,
+
+  /**
+   * The mouse event to listen to. You can disable the listener by providing `false`.
+   */
+  mouseEvent: _propTypes.default.oneOf(['onClick', 'onMouseDown', 'onMouseUp', false]),
+
+  /**
+   * Callback fired when a "click away" event is detected.
+   */
+  onClickAway: _propTypes.default.func.isRequired,
+
+  /**
+   * The touch event to listen to. You can disable the listener by providing `false`.
+   */
+  touchEvent: _propTypes.default.oneOf(['onTouchEnd', 'onTouchStart', false])
+} : void 0;
+
+if ("development" !== 'production') {
+  // eslint-disable-next-line
+  ClickAwayListener['propTypes' + ''] = (0, _utils.exactProp)(ClickAwayListener.propTypes);
+}
+
+var _default = ClickAwayListener;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","prop-types":"../node_modules/prop-types/index.js","../utils/ownerDocument":"../node_modules/@material-ui/core/esm/utils/ownerDocument.js","../utils/useForkRef":"../node_modules/@material-ui/core/esm/utils/useForkRef.js","../utils/useEventCallback":"../node_modules/@material-ui/core/esm/utils/useEventCallback.js","@material-ui/utils":"../node_modules/@material-ui/utils/esm/index.js"}],"../node_modules/@material-ui/core/esm/ClickAwayListener/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function () {
+    return _ClickAwayListener.default;
+  }
+});
+
+var _ClickAwayListener = _interopRequireDefault(require("./ClickAwayListener"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./ClickAwayListener":"../node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js"}],"../node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/defineProperty"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _Paper = _interopRequireDefault(require("../Paper"));
+
+var _colorManipulator = require("../styles/colorManipulator");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = function styles(theme) {
+  var emphasis = theme.palette.type === 'light' ? 0.8 : 0.98;
+  var backgroundColor = (0, _colorManipulator.emphasize)(theme.palette.background.default, emphasis);
+  return {
+    /* Styles applied to the root element. */
+    root: (0, _extends2.default)({}, theme.typography.body2, (0, _defineProperty2.default)({
+      color: theme.palette.getContrastText(backgroundColor),
+      backgroundColor: backgroundColor,
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      padding: '6px 16px',
+      borderRadius: theme.shape.borderRadius,
+      flexGrow: 1
+    }, theme.breakpoints.up('sm'), {
+      flexGrow: 'initial',
+      minWidth: 288
+    })),
+
+    /* Styles applied to the message wrapper element. */
+    message: {
+      padding: '8px 0'
+    },
+
+    /* Styles applied to the action wrapper element if `action` is provided. */
+    action: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      paddingLeft: 16,
+      marginRight: -8
+    }
+  };
+};
+
+exports.styles = styles;
+var SnackbarContent = /*#__PURE__*/React.forwardRef(function SnackbarContent(props, ref) {
+  var action = props.action,
+      classes = props.classes,
+      className = props.className,
+      message = props.message,
+      _props$role = props.role,
+      role = _props$role === void 0 ? 'alert' : _props$role,
+      other = (0, _objectWithoutProperties2.default)(props, ["action", "classes", "className", "message", "role"]);
+  return /*#__PURE__*/React.createElement(_Paper.default, (0, _extends2.default)({
+    role: role,
+    square: true,
+    elevation: 6,
+    className: (0, _clsx.default)(classes.root, className),
+    ref: ref
+  }, other), /*#__PURE__*/React.createElement("div", {
+    className: classes.message
+  }, message), action ? /*#__PURE__*/React.createElement("div", {
+    className: classes.action
+  }, action) : null);
+});
+"development" !== "production" ? SnackbarContent.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The action to display. It renders after the message, at the end of the snackbar.
+   */
+  action: _propTypes.default.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * The message to display.
+   */
+  message: _propTypes.default.node,
+
+  /**
+   * The ARIA role attribute of the element.
+   */
+  role: _propTypes.default.string
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiSnackbarContent'
+})(SnackbarContent);
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/@material-ui/core/esm/styles/createMuiStrictModeTheme.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","@babel/runtime/helpers/esm/defineProperty":"../node_modules/@babel/runtime/helpers/esm/defineProperty.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","../styles/withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js","../Paper":"../node_modules/@material-ui/core/esm/Paper/index.js","../styles/colorManipulator":"../node_modules/@material-ui/core/esm/styles/colorManipulator.js"}],"../node_modules/@material-ui/core/esm/SnackbarContent/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function () {
+    return _SnackbarContent.default;
+  }
+});
+
+var _SnackbarContent = _interopRequireDefault(require("./SnackbarContent"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./SnackbarContent":"../node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js"}],"../node_modules/@material-ui/core/esm/Snackbar/Snackbar.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/defineProperty"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _transitions = require("../styles/transitions");
+
+var _ClickAwayListener = _interopRequireDefault(require("../ClickAwayListener"));
+
+var _useEventCallback = _interopRequireDefault(require("../utils/useEventCallback"));
+
+var _capitalize = _interopRequireDefault(require("../utils/capitalize"));
+
+var _createChainedFunction = _interopRequireDefault(require("../utils/createChainedFunction"));
+
+var _Grow = _interopRequireDefault(require("../Grow"));
+
+var _SnackbarContent = _interopRequireDefault(require("../SnackbarContent"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = function styles(theme) {
+  var top1 = {
+    top: 8
+  };
+  var bottom1 = {
+    bottom: 8
+  };
+  var right = {
+    justifyContent: 'flex-end'
+  };
+  var left = {
+    justifyContent: 'flex-start'
+  };
+  var top3 = {
+    top: 24
+  };
+  var bottom3 = {
+    bottom: 24
+  };
+  var right3 = {
+    right: 24
+  };
+  var left3 = {
+    left: 24
+  };
+  var center = {
+    left: '50%',
+    right: 'auto',
+    transform: 'translateX(-50%)'
+  };
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      zIndex: theme.zIndex.snackbar,
+      position: 'fixed',
+      display: 'flex',
+      left: 8,
+      right: 8,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'center' }}`. */
+    anchorOriginTopCenter: (0, _extends2.default)({}, top1, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({}, top3, center))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'center' }}`. */
+    anchorOriginBottomCenter: (0, _extends2.default)({}, bottom1, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({}, bottom3, center))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'right' }}`. */
+    anchorOriginTopRight: (0, _extends2.default)({}, top1, right, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
+      left: 'auto'
+    }, top3, right3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'right' }}`. */
+    anchorOriginBottomRight: (0, _extends2.default)({}, bottom1, right, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
+      left: 'auto'
+    }, bottom3, right3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'left' }}`. */
+    anchorOriginTopLeft: (0, _extends2.default)({}, top1, left, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
+      right: 'auto'
+    }, top3, left3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'left' }}`. */
+    anchorOriginBottomLeft: (0, _extends2.default)({}, bottom1, left, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
+      right: 'auto'
+    }, bottom3, left3)))
+  };
+};
+
+exports.styles = styles;
+var Snackbar = /*#__PURE__*/React.forwardRef(function Snackbar(props, ref) {
+  var action = props.action,
+      _props$anchorOrigin = props.anchorOrigin;
+  _props$anchorOrigin = _props$anchorOrigin === void 0 ? {
+    vertical: 'bottom',
+    horizontal: 'center'
+  } : _props$anchorOrigin;
+  var vertical = _props$anchorOrigin.vertical,
+      horizontal = _props$anchorOrigin.horizontal,
+      _props$autoHideDurati = props.autoHideDuration,
+      autoHideDuration = _props$autoHideDurati === void 0 ? null : _props$autoHideDurati,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      ClickAwayListenerProps = props.ClickAwayListenerProps,
+      ContentProps = props.ContentProps,
+      _props$disableWindowB = props.disableWindowBlurListener,
+      disableWindowBlurListener = _props$disableWindowB === void 0 ? false : _props$disableWindowB,
+      message = props.message,
+      onClose = props.onClose,
+      onEnter = props.onEnter,
+      onEntered = props.onEntered,
+      onEntering = props.onEntering,
+      onExit = props.onExit,
+      onExited = props.onExited,
+      onExiting = props.onExiting,
+      onMouseEnter = props.onMouseEnter,
+      onMouseLeave = props.onMouseLeave,
+      open = props.open,
+      resumeHideDuration = props.resumeHideDuration,
+      _props$TransitionComp = props.TransitionComponent,
+      TransitionComponent = _props$TransitionComp === void 0 ? _Grow.default : _props$TransitionComp,
+      _props$transitionDura = props.transitionDuration,
+      transitionDuration = _props$transitionDura === void 0 ? {
+    enter: _transitions.duration.enteringScreen,
+    exit: _transitions.duration.leavingScreen
+  } : _props$transitionDura,
+      TransitionProps = props.TransitionProps,
+      other = (0, _objectWithoutProperties2.default)(props, ["action", "anchorOrigin", "autoHideDuration", "children", "classes", "className", "ClickAwayListenerProps", "ContentProps", "disableWindowBlurListener", "message", "onClose", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "TransitionComponent", "transitionDuration", "TransitionProps"]);
+  var timerAutoHide = React.useRef();
+
+  var _React$useState = React.useState(true),
+      exited = _React$useState[0],
+      setExited = _React$useState[1];
+
+  var handleClose = (0, _useEventCallback.default)(function () {
+    if (onClose) {
+      onClose.apply(void 0, arguments);
+    }
+  });
+  var setAutoHideTimer = (0, _useEventCallback.default)(function (autoHideDurationParam) {
+    if (!onClose || autoHideDurationParam == null) {
+      return;
+    }
+
+    clearTimeout(timerAutoHide.current);
+    timerAutoHide.current = setTimeout(function () {
+      handleClose(null, 'timeout');
+    }, autoHideDurationParam);
+  });
+  React.useEffect(function () {
+    if (open) {
+      setAutoHideTimer(autoHideDuration);
+    }
+
+    return function () {
+      clearTimeout(timerAutoHide.current);
+    };
+  }, [open, autoHideDuration, setAutoHideTimer]); // Pause the timer when the user is interacting with the Snackbar
+  // or when the user hide the window.
+
+  var handlePause = function handlePause() {
+    clearTimeout(timerAutoHide.current);
+  }; // Restart the timer when the user is no longer interacting with the Snackbar
+  // or when the window is shown back.
+
+
+  var handleResume = React.useCallback(function () {
+    if (autoHideDuration != null) {
+      setAutoHideTimer(resumeHideDuration != null ? resumeHideDuration : autoHideDuration * 0.5);
+    }
+  }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
+
+  var handleMouseEnter = function handleMouseEnter(event) {
+    if (onMouseEnter) {
+      onMouseEnter(event);
+    }
+
+    handlePause();
+  };
+
+  var handleMouseLeave = function handleMouseLeave(event) {
+    if (onMouseLeave) {
+      onMouseLeave(event);
+    }
+
+    handleResume();
+  };
+
+  var handleClickAway = function handleClickAway(event) {
+    if (onClose) {
+      onClose(event, 'clickaway');
+    }
+  };
+
+  var handleExited = function handleExited() {
+    setExited(true);
+  };
+
+  var handleEnter = function handleEnter() {
+    setExited(false);
+  };
+
+  React.useEffect(function () {
+    if (!disableWindowBlurListener && open) {
+      window.addEventListener('focus', handleResume);
+      window.addEventListener('blur', handlePause);
+      return function () {
+        window.removeEventListener('focus', handleResume);
+        window.removeEventListener('blur', handlePause);
+      };
+    }
+
+    return undefined;
+  }, [disableWindowBlurListener, handleResume, open]); // So we only render active snackbars.
+
+  if (!open && exited) {
+    return null;
+  }
+
+  return /*#__PURE__*/React.createElement(_ClickAwayListener.default, (0, _extends2.default)({
+    onClickAway: handleClickAway
+  }, ClickAwayListenerProps), /*#__PURE__*/React.createElement("div", (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, classes["anchorOrigin".concat((0, _capitalize.default)(vertical)).concat((0, _capitalize.default)(horizontal))], className),
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    ref: ref
+  }, other), /*#__PURE__*/React.createElement(TransitionComponent, (0, _extends2.default)({
+    appear: true,
+    in: open,
+    onEnter: (0, _createChainedFunction.default)(handleEnter, onEnter),
+    onEntered: onEntered,
+    onEntering: onEntering,
+    onExit: onExit,
+    onExited: (0, _createChainedFunction.default)(handleExited, onExited),
+    onExiting: onExiting,
+    timeout: transitionDuration,
+    direction: vertical === 'top' ? 'down' : 'up'
+  }, TransitionProps), children || /*#__PURE__*/React.createElement(_SnackbarContent.default, (0, _extends2.default)({
+    message: message,
+    action: action
+  }, ContentProps)))));
+});
+"development" !== "production" ? Snackbar.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The action to display. It renders after the message, at the end of the snackbar.
+   */
+  action: _propTypes.default.node,
+
+  /**
+   * The anchor of the `Snackbar`.
+   */
+  anchorOrigin: _propTypes.default.shape({
+    horizontal: _propTypes.default.oneOf(['center', 'left', 'right']).isRequired,
+    vertical: _propTypes.default.oneOf(['bottom', 'top']).isRequired
+  }),
+
+  /**
+   * The number of milliseconds to wait before automatically calling the
+   * `onClose` function. `onClose` should then set the state of the `open`
+   * prop to hide the Snackbar. This behavior is disabled by default with
+   * the `null` value.
+   */
+  autoHideDuration: _propTypes.default.number,
+
+  /**
+   * Replace the `SnackbarContent` component.
+   */
+  children: _propTypes.default.element,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * Props applied to the `ClickAwayListener` element.
+   */
+  ClickAwayListenerProps: _propTypes.default.object,
+
+  /**
+   * Props applied to the [`SnackbarContent`](/api/snackbar-content/) element.
+   */
+  ContentProps: _propTypes.default.object,
+
+  /**
+   * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
+   */
+  disableWindowBlurListener: _propTypes.default.bool,
+
+  /**
+   * When displaying multiple consecutive Snackbars from a parent rendering a single
+   * <Snackbar/>, add the key prop to ensure independent treatment of each message.
+   * e.g. <Snackbar key={message} />, otherwise, the message may update-in-place and
+   * features such as autoHideDuration may be canceled.
+   */
+  key: _propTypes.default.any,
+
+  /**
+   * The message to display.
+   */
+  message: _propTypes.default.node,
+
+  /**
+   * Callback fired when the component requests to be closed.
+   * Typically `onClose` is used to set state in the parent component,
+   * which is used to control the `Snackbar` `open` prop.
+   * The `reason` parameter can optionally be used to control the response to `onClose`,
+   * for example ignoring `clickaway`.
+   *
+   * @param {object} event The event source of the callback.
+   * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`.
+   */
+  onClose: _propTypes.default.func,
+
+  /**
+   * Callback fired before the transition is entering.
+   */
+  onEnter: _propTypes.default.func,
+
+  /**
+   * Callback fired when the transition has entered.
+   */
+  onEntered: _propTypes.default.func,
+
+  /**
+   * Callback fired when the transition is entering.
+   */
+  onEntering: _propTypes.default.func,
+
+  /**
+   * Callback fired before the transition is exiting.
+   */
+  onExit: _propTypes.default.func,
+
+  /**
+   * Callback fired when the transition has exited.
+   */
+  onExited: _propTypes.default.func,
+
+  /**
+   * Callback fired when the transition is exiting.
+   */
+  onExiting: _propTypes.default.func,
+
+  /**
+   * @ignore
+   */
+  onMouseEnter: _propTypes.default.func,
+
+  /**
+   * @ignore
+   */
+  onMouseLeave: _propTypes.default.func,
+
+  /**
+   * If `true`, `Snackbar` is open.
+   */
+  open: _propTypes.default.bool,
+
+  /**
+   * The number of milliseconds to wait before dismissing after user interaction.
+   * If `autoHideDuration` prop isn't specified, it does nothing.
+   * If `autoHideDuration` prop is specified but `resumeHideDuration` isn't,
+   * we default to `autoHideDuration / 2` ms.
+   */
+  resumeHideDuration: _propTypes.default.number,
+
+  /**
+   * The component used for the transition.
+   * [Follow this guide](/components/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
+   */
+  TransitionComponent: _propTypes.default.elementType,
+
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   */
+  transitionDuration: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.shape({
+    appear: _propTypes.default.number,
+    enter: _propTypes.default.number,
+    exit: _propTypes.default.number
+  })]),
+
+  /**
+   * Props applied to the [`Transition`](http://reactcommunity.org/react-transition-group/transition#Transition-props) element.
+   */
+  TransitionProps: _propTypes.default.object
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  flip: false,
+  name: 'MuiSnackbar'
+})(Snackbar);
+
+exports.default = _default;
+},{"@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","@babel/runtime/helpers/esm/defineProperty":"../node_modules/@babel/runtime/helpers/esm/defineProperty.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","../styles/withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js","../styles/transitions":"../node_modules/@material-ui/core/esm/styles/transitions.js","../ClickAwayListener":"../node_modules/@material-ui/core/esm/ClickAwayListener/index.js","../utils/useEventCallback":"../node_modules/@material-ui/core/esm/utils/useEventCallback.js","../utils/capitalize":"../node_modules/@material-ui/core/esm/utils/capitalize.js","../utils/createChainedFunction":"../node_modules/@material-ui/core/esm/utils/createChainedFunction.js","../Grow":"../node_modules/@material-ui/core/esm/Grow/index.js","../SnackbarContent":"../node_modules/@material-ui/core/esm/SnackbarContent/index.js"}],"../node_modules/@material-ui/core/esm/Snackbar/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function () {
+    return _Snackbar.default;
+  }
+});
+
+var _Snackbar = _interopRequireDefault(require("./Snackbar"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./Snackbar":"../node_modules/@material-ui/core/esm/Snackbar/Snackbar.js"}],"../node_modules/@material-ui/core/esm/styles/createMuiStrictModeTheme.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -56608,7 +57338,763 @@ var _withTheme = _interopRequireDefault(require("./withTheme"));
 var _styles = require("@material-ui/styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./colorManipulator":"../node_modules/@material-ui/core/esm/styles/colorManipulator.js","./createMuiTheme":"../node_modules/@material-ui/core/esm/styles/createMuiTheme.js","./createMuiStrictModeTheme":"../node_modules/@material-ui/core/esm/styles/createMuiStrictModeTheme.js","./createStyles":"../node_modules/@material-ui/core/esm/styles/createStyles.js","./makeStyles":"../node_modules/@material-ui/core/esm/styles/makeStyles.js","./responsiveFontSizes":"../node_modules/@material-ui/core/esm/styles/responsiveFontSizes.js","./styled":"../node_modules/@material-ui/core/esm/styles/styled.js","./transitions":"../node_modules/@material-ui/core/esm/styles/transitions.js","./useTheme":"../node_modules/@material-ui/core/esm/styles/useTheme.js","./withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js","./withTheme":"../node_modules/@material-ui/core/esm/styles/withTheme.js","@material-ui/styles":"../node_modules/@material-ui/styles/esm/index.js"}],"../node_modules/@material-ui/core/esm/Container/Container.js":[function(require,module,exports) {
+},{"./colorManipulator":"../node_modules/@material-ui/core/esm/styles/colorManipulator.js","./createMuiTheme":"../node_modules/@material-ui/core/esm/styles/createMuiTheme.js","./createMuiStrictModeTheme":"../node_modules/@material-ui/core/esm/styles/createMuiStrictModeTheme.js","./createStyles":"../node_modules/@material-ui/core/esm/styles/createStyles.js","./makeStyles":"../node_modules/@material-ui/core/esm/styles/makeStyles.js","./responsiveFontSizes":"../node_modules/@material-ui/core/esm/styles/responsiveFontSizes.js","./styled":"../node_modules/@material-ui/core/esm/styles/styled.js","./transitions":"../node_modules/@material-ui/core/esm/styles/transitions.js","./useTheme":"../node_modules/@material-ui/core/esm/styles/useTheme.js","./withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js","./withTheme":"../node_modules/@material-ui/core/esm/styles/withTheme.js","@material-ui/styles":"../node_modules/@material-ui/styles/esm/index.js"}],"../node_modules/@material-ui/core/esm/utils/deprecatedPropType.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = deprecatedPropType;
+
+function deprecatedPropType(validator, reason) {
+  if ("development" === 'production') {
+    return function () {
+      return null;
+    };
+  }
+
+  return function (props, propName, componentName, location, propFullName) {
+    var componentNameSafe = componentName || '<<anonymous>>';
+    var propFullNameSafe = propFullName || propName;
+
+    if (typeof props[propName] !== 'undefined') {
+      return new Error("The ".concat(location, " `").concat(propFullNameSafe, "` of ") + "`".concat(componentNameSafe, "` is deprecated. ").concat(reason));
+    }
+
+    return null;
+  };
+}
+},{}],"../node_modules/@material-ui/core/esm/utils/unsupportedProp.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = unsupportedProp;
+
+function unsupportedProp(props, propName, componentName, location, propFullName) {
+  if ("development" === 'production') {
+    return null;
+  }
+
+  var propFullNameSafe = propFullName || propName;
+
+  if (typeof props[propName] !== 'undefined') {
+    return new Error("The prop `".concat(propFullNameSafe, "` is not supported. Please remove it."));
+  }
+
+  return null;
+}
+},{}],"../node_modules/@material-ui/core/esm/utils/unstable_useId.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = useId;
+
+var React = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * Private module reserved for @material-ui/x packages.
+ */
+function useId(idOverride) {
+  var _React$useState = React.useState(idOverride),
+      defaultId = _React$useState[0],
+      setDefaultId = _React$useState[1];
+
+  var id = idOverride || defaultId;
+  React.useEffect(function () {
+    if (defaultId == null) {
+      // Fallback to this default id when possible.
+      // Use the random value for client-side rendering only.
+      // We can't use it server-side.
+      setDefaultId("mui-".concat(Math.round(Math.random() * 1e5)));
+    }
+  }, [defaultId]);
+  return id;
+}
+},{"react":"../node_modules/react/index.js"}],"../node_modules/@material-ui/core/esm/utils/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "capitalize", {
+  enumerable: true,
+  get: function () {
+    return _capitalize.default;
+  }
+});
+Object.defineProperty(exports, "createChainedFunction", {
+  enumerable: true,
+  get: function () {
+    return _createChainedFunction.default;
+  }
+});
+Object.defineProperty(exports, "createSvgIcon", {
+  enumerable: true,
+  get: function () {
+    return _createSvgIcon.default;
+  }
+});
+Object.defineProperty(exports, "debounce", {
+  enumerable: true,
+  get: function () {
+    return _debounce.default;
+  }
+});
+Object.defineProperty(exports, "deprecatedPropType", {
+  enumerable: true,
+  get: function () {
+    return _deprecatedPropType.default;
+  }
+});
+Object.defineProperty(exports, "isMuiElement", {
+  enumerable: true,
+  get: function () {
+    return _isMuiElement.default;
+  }
+});
+Object.defineProperty(exports, "ownerDocument", {
+  enumerable: true,
+  get: function () {
+    return _ownerDocument.default;
+  }
+});
+Object.defineProperty(exports, "ownerWindow", {
+  enumerable: true,
+  get: function () {
+    return _ownerWindow.default;
+  }
+});
+Object.defineProperty(exports, "requirePropFactory", {
+  enumerable: true,
+  get: function () {
+    return _requirePropFactory.default;
+  }
+});
+Object.defineProperty(exports, "setRef", {
+  enumerable: true,
+  get: function () {
+    return _setRef.default;
+  }
+});
+Object.defineProperty(exports, "unsupportedProp", {
+  enumerable: true,
+  get: function () {
+    return _unsupportedProp.default;
+  }
+});
+Object.defineProperty(exports, "useControlled", {
+  enumerable: true,
+  get: function () {
+    return _useControlled.default;
+  }
+});
+Object.defineProperty(exports, "useEventCallback", {
+  enumerable: true,
+  get: function () {
+    return _useEventCallback.default;
+  }
+});
+Object.defineProperty(exports, "useForkRef", {
+  enumerable: true,
+  get: function () {
+    return _useForkRef.default;
+  }
+});
+Object.defineProperty(exports, "unstable_useId", {
+  enumerable: true,
+  get: function () {
+    return _unstable_useId.default;
+  }
+});
+Object.defineProperty(exports, "useIsFocusVisible", {
+  enumerable: true,
+  get: function () {
+    return _useIsFocusVisible.default;
+  }
+});
+
+var _capitalize = _interopRequireDefault(require("./capitalize"));
+
+var _createChainedFunction = _interopRequireDefault(require("./createChainedFunction"));
+
+var _createSvgIcon = _interopRequireDefault(require("./createSvgIcon"));
+
+var _debounce = _interopRequireDefault(require("./debounce"));
+
+var _deprecatedPropType = _interopRequireDefault(require("./deprecatedPropType"));
+
+var _isMuiElement = _interopRequireDefault(require("./isMuiElement"));
+
+var _ownerDocument = _interopRequireDefault(require("./ownerDocument"));
+
+var _ownerWindow = _interopRequireDefault(require("./ownerWindow"));
+
+var _requirePropFactory = _interopRequireDefault(require("./requirePropFactory"));
+
+var _setRef = _interopRequireDefault(require("./setRef"));
+
+var _unsupportedProp = _interopRequireDefault(require("./unsupportedProp"));
+
+var _useControlled = _interopRequireDefault(require("./useControlled"));
+
+var _useEventCallback = _interopRequireDefault(require("./useEventCallback"));
+
+var _useForkRef = _interopRequireDefault(require("./useForkRef"));
+
+var _unstable_useId = _interopRequireDefault(require("./unstable_useId"));
+
+var _useIsFocusVisible = _interopRequireDefault(require("./useIsFocusVisible"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./capitalize":"../node_modules/@material-ui/core/esm/utils/capitalize.js","./createChainedFunction":"../node_modules/@material-ui/core/esm/utils/createChainedFunction.js","./createSvgIcon":"../node_modules/@material-ui/core/esm/utils/createSvgIcon.js","./debounce":"../node_modules/@material-ui/core/esm/utils/debounce.js","./deprecatedPropType":"../node_modules/@material-ui/core/esm/utils/deprecatedPropType.js","./isMuiElement":"../node_modules/@material-ui/core/esm/utils/isMuiElement.js","./ownerDocument":"../node_modules/@material-ui/core/esm/utils/ownerDocument.js","./ownerWindow":"../node_modules/@material-ui/core/esm/utils/ownerWindow.js","./requirePropFactory":"../node_modules/@material-ui/core/esm/utils/requirePropFactory.js","./setRef":"../node_modules/@material-ui/core/esm/utils/setRef.js","./unsupportedProp":"../node_modules/@material-ui/core/esm/utils/unsupportedProp.js","./useControlled":"../node_modules/@material-ui/core/esm/utils/useControlled.js","./useEventCallback":"../node_modules/@material-ui/core/esm/utils/useEventCallback.js","./useForkRef":"../node_modules/@material-ui/core/esm/utils/useForkRef.js","./unstable_useId":"../node_modules/@material-ui/core/esm/utils/unstable_useId.js","./useIsFocusVisible":"../node_modules/@material-ui/core/esm/utils/useIsFocusVisible.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _utils = require("@material-ui/core/utils");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * @ignore - internal component.
+ */
+var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
+  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+}), 'SuccessOutlined');
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _utils = require("@material-ui/core/utils");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * @ignore - internal component.
+ */
+var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
+  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+}), 'ReportProblemOutlined');
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _utils = require("@material-ui/core/utils");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * @ignore - internal component.
+ */
+var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
+  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'ErrorOutline');
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _utils = require("@material-ui/core/utils");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * @ignore - internal component.
+ */
+var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
+  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+}), 'InfoOutlined');
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _utils = require("@material-ui/core/utils");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * @ignore - internal component.
+ */
+var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
+  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+}), 'Close');
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/Alert/Alert.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _styles = require("@material-ui/core/styles");
+
+var _Paper = _interopRequireDefault(require("@material-ui/core/Paper"));
+
+var _SuccessOutlined = _interopRequireDefault(require("../internal/svg-icons/SuccessOutlined"));
+
+var _ReportProblemOutlined = _interopRequireDefault(require("../internal/svg-icons/ReportProblemOutlined"));
+
+var _ErrorOutline = _interopRequireDefault(require("../internal/svg-icons/ErrorOutline"));
+
+var _InfoOutlined = _interopRequireDefault(require("../internal/svg-icons/InfoOutlined"));
+
+var _Close = _interopRequireDefault(require("../internal/svg-icons/Close"));
+
+var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
+
+var _utils = require("@material-ui/core/utils");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = function styles(theme) {
+  var getColor = theme.palette.type === 'light' ? _styles.darken : _styles.lighten;
+  var getBackgroundColor = theme.palette.type === 'light' ? _styles.lighten : _styles.darken;
+  return {
+    /* Styles applied to the root element. */
+    root: (0, _extends2.default)({}, theme.typography.body2, {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: 'transparent',
+      display: 'flex',
+      padding: '6px 16px'
+    }),
+
+    /* Styles applied to the root element if `variant="standard"` and `color="success"`. */
+    standardSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
+      '& $icon': {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="info"`. */
+    standardInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
+      '& $icon': {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="warning"`. */
+    standardWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.9),
+      '& $icon': {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="error"`. */
+    standardError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.error.main, 0.9),
+      '& $icon': {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="success"`. */
+    outlinedSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      border: "1px solid ".concat(theme.palette.success.main),
+      '& $icon': {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="info"`. */
+    outlinedInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      border: "1px solid ".concat(theme.palette.info.main),
+      '& $icon': {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="warning"`. */
+    outlinedWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      border: "1px solid ".concat(theme.palette.warning.main),
+      '& $icon': {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="error"`. */
+    outlinedError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      border: "1px solid ".concat(theme.palette.error.main),
+      '& $icon': {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="success"`. */
+    filledSuccess: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.success.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="info"`. */
+    filledInfo: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.info.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="warning"`. */
+    filledWarning: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.warning.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="error"`. */
+    filledError: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.error.main
+    },
+
+    /* Styles applied to the icon wrapper element. */
+    icon: {
+      marginRight: 12,
+      padding: '7px 0',
+      display: 'flex',
+      fontSize: 22,
+      opacity: 0.9
+    },
+
+    /* Styles applied to the message wrapper element. */
+    message: {
+      padding: '8px 0'
+    },
+
+    /* Styles applied to the action wrapper element if `action` is provided. */
+    action: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      paddingLeft: 16,
+      marginRight: -8
+    }
+  };
+};
+
+exports.styles = styles;
+var defaultIconMapping = {
+  success: /*#__PURE__*/React.createElement(_SuccessOutlined.default, {
+    fontSize: "inherit"
+  }),
+  warning: /*#__PURE__*/React.createElement(_ReportProblemOutlined.default, {
+    fontSize: "inherit"
+  }),
+  error: /*#__PURE__*/React.createElement(_ErrorOutline.default, {
+    fontSize: "inherit"
+  }),
+  info: /*#__PURE__*/React.createElement(_InfoOutlined.default, {
+    fontSize: "inherit"
+  })
+};
+
+var _ref = /*#__PURE__*/React.createElement(_Close.default, {
+  fontSize: "small"
+});
+
+var Alert = /*#__PURE__*/React.forwardRef(function Alert(props, ref) {
+  var action = props.action,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      _props$closeText = props.closeText,
+      closeText = _props$closeText === void 0 ? 'Close' : _props$closeText,
+      color = props.color,
+      icon = props.icon,
+      _props$iconMapping = props.iconMapping,
+      iconMapping = _props$iconMapping === void 0 ? defaultIconMapping : _props$iconMapping,
+      onClose = props.onClose,
+      _props$role = props.role,
+      role = _props$role === void 0 ? 'alert' : _props$role,
+      _props$severity = props.severity,
+      severity = _props$severity === void 0 ? 'success' : _props$severity,
+      _props$variant = props.variant,
+      variant = _props$variant === void 0 ? 'standard' : _props$variant,
+      other = (0, _objectWithoutProperties2.default)(props, ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant"]);
+  return /*#__PURE__*/React.createElement(_Paper.default, (0, _extends2.default)({
+    role: role,
+    square: true,
+    elevation: 0,
+    className: (0, _clsx.default)(classes.root, classes["".concat(variant).concat((0, _utils.capitalize)(color || severity))], className),
+    ref: ref
+  }, other), icon !== false ? /*#__PURE__*/React.createElement("div", {
+    className: classes.icon
+  }, icon || iconMapping[severity] || defaultIconMapping[severity]) : null, /*#__PURE__*/React.createElement("div", {
+    className: classes.message
+  }, children), action != null ? /*#__PURE__*/React.createElement("div", {
+    className: classes.action
+  }, action) : null, action == null && onClose ? /*#__PURE__*/React.createElement("div", {
+    className: classes.action
+  }, /*#__PURE__*/React.createElement(_IconButton.default, {
+    size: "small",
+    "aria-label": closeText,
+    title: closeText,
+    color: "inherit",
+    onClick: onClose
+  }, _ref)) : null);
+});
+"development" !== "production" ? Alert.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The action to display. It renders after the message, at the end of the alert.
+   */
+  action: _propTypes.default.node,
+
+  /**
+   * The content of the component.
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * Override the default label for the *close popup* icon button.
+   *
+   * For localization purposes, you can use the provided [translations](/guides/localization/).
+   */
+  closeText: _propTypes.default.string,
+
+  /**
+   * The main color for the alert. Unless provided, the value is taken from the `severity` prop.
+   */
+  color: _propTypes.default.oneOf(['error', 'info', 'success', 'warning']),
+
+  /**
+   * Override the icon displayed before the children.
+   * Unless provided, the icon is mapped to the value of the `severity` prop.
+   */
+  icon: _propTypes.default.node,
+
+  /**
+   * The component maps the `severity` prop to a range of different icons,
+   * for instance success to `<SuccessOutlined>`.
+   * If you wish to change this mapping, you can provide your own.
+   * Alternatively, you can use the `icon` prop to override the icon displayed.
+   */
+  iconMapping: _propTypes.default.shape({
+    error: _propTypes.default.node,
+    info: _propTypes.default.node,
+    success: _propTypes.default.node,
+    warning: _propTypes.default.node
+  }),
+
+  /**
+   * Callback fired when the component requests to be closed.
+   * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
+   *
+   * @param {object} event The event source of the callback.
+   */
+  onClose: _propTypes.default.func,
+
+  /**
+   * The ARIA role attribute of the element.
+   */
+  role: _propTypes.default.string,
+
+  /**
+   * The severity of the alert. This defines the color and icon used.
+   */
+  severity: _propTypes.default.oneOf(['error', 'info', 'success', 'warning']),
+
+  /**
+   * The variant to use.
+   */
+  variant: _propTypes.default.oneOf(['filled', 'outlined', 'standard'])
+} : void 0;
+
+var _default = (0, _styles.withStyles)(styles, {
+  name: 'MuiAlert'
+})(Alert);
+
+exports.default = _default;
+},{"@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","@material-ui/core/Paper":"../node_modules/@material-ui/core/esm/Paper/index.js","../internal/svg-icons/SuccessOutlined":"../node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js","../internal/svg-icons/ReportProblemOutlined":"../node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js","../internal/svg-icons/ErrorOutline":"../node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js","../internal/svg-icons/InfoOutlined":"../node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js","../internal/svg-icons/Close":"../node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js","@material-ui/core/IconButton":"../node_modules/@material-ui/core/esm/IconButton/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/Alert/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function () {
+    return _Alert.default;
+  }
+});
+
+var _Alert = _interopRequireDefault(require("./Alert"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./Alert":"../node_modules/@material-ui/lab/esm/Alert/Alert.js"}],"../node_modules/@babel/runtime/helpers/interopRequireDefault.js":[function(require,module,exports) {
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+},{}],"../node_modules/@babel/runtime/helpers/extends.js":[function(require,module,exports) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+},{}],"../node_modules/@material-ui/icons/utils/createSvgIcon.js":[function(require,module,exports) {
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createSvgIcon;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _SvgIcon = _interopRequireDefault(require("@material-ui/core/SvgIcon"));
+
+function createSvgIcon(path, displayName) {
+  var Component = _react.default.memo(_react.default.forwardRef(function (props, ref) {
+    return _react.default.createElement(_SvgIcon.default, (0, _extends2.default)({
+      ref: ref
+    }, props), path);
+  }));
+
+  if ("development" !== 'production') {
+    Component.displayName = "".concat(displayName, "Icon");
+  }
+
+  Component.muiName = _SvgIcon.default.muiName;
+  return Component;
+}
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","@babel/runtime/helpers/extends":"../node_modules/@babel/runtime/helpers/extends.js","react":"../node_modules/react/index.js","@material-ui/core/SvgIcon":"../node_modules/@material-ui/core/esm/SvgIcon/index.js"}],"../node_modules/@material-ui/icons/LockOutlined.js":[function(require,module,exports) {
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
+  d: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
+}), 'LockOutlined');
+
+exports.default = _default;
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/@material-ui/core/esm/Container/Container.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -56800,7 +58286,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = isJson;
 exports.domain = void 0;
-const domain = 'http://localhost:8000/';
+const domain = "development" === 'development' ? 'http://localhost:8000/' : 'https://twitees.herokuapp.com/';
 exports.domain = domain;
 
 function isJson(item) {
@@ -58437,8 +59923,7 @@ const userDetails = () => {
         delete resp.password;
         localforage.setItem('user', resp).then(function (value) {
           dispatch(actionCreator(USER_DETAILS, resp));
-        }).catch(function (err) {
-          console.log(err); // implement saving to localStorage 
+        }).catch(function (err) {// implement saving to localStorage 
         });
       }).catch(e => {
         dispatch(actionCreator(NETWORK_ERR, e));
@@ -58453,7 +59938,6 @@ exports.userDetails = userDetails;
 const likeUpdate = postId => {
   return dispatch => {
     (() => {
-      console.log('like fx form action');
       const param = {
         headers: {
           'Content-Type': 'application/json',
@@ -58536,7 +60020,6 @@ const commentPost = (_ref2) => {
           throw new Error('request failed');
         }
       }).then(resp => {
-        console.log(resp);
         dispatch(actionCreator(COMMENT, resp));
       }).catch(e => {
         dispatch(actionCreator(NETWORK_ERR, e));
@@ -58651,8 +60134,6 @@ var _actions = require("../actions");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const reducer = (state, action) => {
-  console.log(action.type);
-
   switch (action.type) {
     case _actions.LOGGEDIN:
       {
@@ -58664,7 +60145,7 @@ const reducer = (state, action) => {
     case _actions.LOGGEDOUT:
       {
         return (0, _immer.default)(state, draft => {
-          draft.LOGGEDOUT = _actions.LOGGEDOUT;
+          draft.LoggedIn = _actions.LOGGEDOUT;
         });
       }
 
@@ -58704,7 +60185,6 @@ const reducer = (state, action) => {
             UserId,
             PostId
           } = action.payload;
-          console.log(action.payload);
           draft.Post = state.Post.map((item, i) => {
             if (item.id === PostId) {
               const copyObj = JSON.parse(JSON.stringify(item));
@@ -58730,7 +60210,6 @@ const reducer = (state, action) => {
               const copyObj = JSON.parse(JSON.stringify(item));
               const likes = copyObj.Likes.filter(obj => obj.UserId !== userId);
               copyObj.Likes = likes;
-              console.log(copyObj);
               return copyObj;
             } else {
               return item;
@@ -58746,13 +60225,7 @@ const reducer = (state, action) => {
             userId,
             postId
           } = action.payload;
-          const newArr = state.Post.slice().filter(item => item.id !== postId); // state.Post.slice().forEach(item => {
-          //     if(item.id !== postId){
-          //         newArr.push(item)
-          //     }
-          // })
-
-          console.log(newArr);
+          const newArr = state.Post.slice().filter(item => item.id !== postId);
           draft.Post = newArr;
         });
       }
@@ -58768,7 +60241,6 @@ const reducer = (state, action) => {
               const copyObj = JSON.parse(JSON.stringify(item));
               const comment = [action.payload, ...copyObj.Comments];
               copyObj.Comments = comment;
-              console.log(copyObj);
               return copyObj;
             } else {
               return item;
@@ -58833,8 +60305,6 @@ const useGlobalStore = () => _react.default.useContext(Store); // retrieve token
 
 exports.useGlobalStore = useGlobalStore;
 const token = cookies.get('twit_token');
-console.log(token, 'from token value'); // cookies.remove('twit_token')
-
 const initialState = {
   LoggedIn: token !== null && token !== undefined ? _actions.LOGGEDIN : _actions.LOGGEDOUT,
   User: {},
@@ -61699,6 +63169,10 @@ var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
 
 var _Box = _interopRequireDefault(require("@material-ui/core/Box"));
 
+var _Snackbar = _interopRequireDefault(require("@material-ui/core/Snackbar"));
+
+var _Alert = _interopRequireDefault(require("@material-ui/lab/Alert"));
+
 var _LockOutlined = _interopRequireDefault(require("@material-ui/icons/LockOutlined"));
 
 var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
@@ -61730,6 +63204,8 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 const cookies = new _universalCookie.default();
 
@@ -61776,6 +63252,13 @@ const useStyles = (0, _styles.makeStyles)(theme => ({
   }
 }));
 
+function Alert(props) {
+  return /*#__PURE__*/_react.default.createElement(_Alert.default, _extends({
+    elevation: 6,
+    variant: "filled"
+  }, props));
+}
+
 var _default = () => {
   const {
     dispatch
@@ -61789,7 +63272,16 @@ var _default = () => {
   const [errEmail, setErrEmail] = (0, _react.useState)(null);
   const [errPass, setErrPass] = (0, _react.useState)(null);
   const [errNet, setNetErr] = (0, _react.useState)(null);
+  const [open, setOpen] = (0, _react.useState)(false);
   const [button_disable, setButton] = (0, _react.useState)(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const onChange = e => {
     setInput(_objectSpread(_objectSpread({}, input), {}, {
@@ -61805,20 +63297,24 @@ var _default = () => {
       } else {
         setErrPass(null);
       }
+
+      setOpen(false);
     }, 2000);
   };
 
   const validation = () => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-    if (input.password.trim().length > 6) {
+    if (input.password.trim().length < 6) {
       setErrPass("Password field cannot be less than six characters");
+      setOpen(true);
       timeout();
       return false;
     }
 
     if (!input.email || reg.test(input.email) === false) {
       setErrEmail("Email Field is Invalid");
+      setOpen(true);
       timeout(1);
       return false;
     }
@@ -61838,44 +63334,50 @@ var _default = () => {
 
     if (validation()) {
       fetch("".concat(_url.domain, "twits/login"), param).then(res => {
-        for (let val of res.headers.entries()) {
-          if (val[0] === 'token') {
-            cookies.set('twit_token', val[1], {
-              path: '/'
-            });
-            console.log(cookies.get('twit_token'));
-          } else {
-            console.log(val[1]);
-          }
-        }
-
         const response = res.json();
 
         if (res.status === 200 || res.status === 201) {
+          for (let val of res.headers.entries()) {
+            if (val[0] === 'token') {
+              cookies.set('twit_token', val[1], {
+                path: '/'
+              });
+            } else {}
+          }
+
           return response;
         } else {
-          throw new Error(response.msg ? response.msg : 'failed network request');
-        }
+          return response;
+        } // else{
+        //     throw new Error(response.msg ? response.msg : 'failed network request')
+        // }
+
       }).then(resp => {
         const token = cookies.get('twit_token');
 
         if (token !== null && token !== undefined) {
           delete resp.password;
-          console.log(resp);
 
           _localforage.default.setItem('user', resp).then(function (value) {
             dispatch((0, _actions.actionCreator)(_actions.LOGGEDIN));
             dispatch((0, _actions.actionCreator)(_actions.USER_DETAILS, resp)); // history.push('/')
-          }).catch(function (err) {
-            console.log(err); // implement saving to localStorage 
+          }).catch(function (err) {// implement saving to localStorage 
           });
         } else {
-          console.log(token);
+          console.log(resp.msg);
+          setNetErr(resp.msg);
+          setTimeout(() => {
+            setOpen(false);
+            setNetErr(null);
+          }, 2000);
         }
       }).catch(err => {
-        console.log(err); // set network err 
-
+        // set network err 
         setNetErr(err.message);
+        setTimeout(() => {
+          setOpen(false);
+          setNetErr(null);
+        }, 2000);
       });
     }
   };
@@ -61946,1497 +63448,17 @@ var _default = () => {
     variant: "body2"
   }, "Don't have an account? Sign Up"))))), /*#__PURE__*/_react.default.createElement(_Box.default, {
     mt: 8
-  }, /*#__PURE__*/_react.default.createElement(Copyright, null)));
+  }, /*#__PURE__*/_react.default.createElement(Copyright, null)), /*#__PURE__*/_react.default.createElement(_Snackbar.default, {
+    open: open,
+    autoHideDuration: 6000,
+    onClose: handleClose
+  }, /*#__PURE__*/_react.default.createElement(Alert, {
+    severity: "success"
+  }, errEmail !== null ? errEmail : errPass !== null ? errPass : errNet)));
 };
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/Avatar":"../node_modules/@material-ui/core/esm/Avatar/index.js","@material-ui/core/Button":"../node_modules/@material-ui/core/esm/Button/index.js","@material-ui/core/CssBaseline":"../node_modules/@material-ui/core/esm/CssBaseline/index.js","@material-ui/core/TextField":"../node_modules/@material-ui/core/esm/TextField/index.js","@material-ui/core/FormControlLabel":"../node_modules/@material-ui/core/esm/FormControlLabel/index.js","@material-ui/core/Checkbox":"../node_modules/@material-ui/core/esm/Checkbox/index.js","@material-ui/core/Link":"../node_modules/@material-ui/core/esm/Link/index.js","@material-ui/core/Grid":"../node_modules/@material-ui/core/esm/Grid/index.js","@material-ui/core/Box":"../node_modules/@material-ui/core/esm/Box/index.js","@material-ui/icons/LockOutlined":"../node_modules/@material-ui/icons/LockOutlined.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","@material-ui/core/Container":"../node_modules/@material-ui/core/esm/Container/index.js","../../config/url":"component/config/url/index.js","../../Provider":"component/Provider/index.js","localforage":"../node_modules/localforage/dist/localforage.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../config/actions":"component/config/actions/index.js","universal-cookie":"../node_modules/universal-cookie/es6/index.js"}],"../node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var ReactDOM = _interopRequireWildcard(require("react-dom"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _ownerDocument = _interopRequireDefault(require("../utils/ownerDocument"));
-
-var _useForkRef = _interopRequireDefault(require("../utils/useForkRef"));
-
-var _useEventCallback = _interopRequireDefault(require("../utils/useEventCallback"));
-
-var _utils = require("@material-ui/utils");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function mapEventPropToEvent(eventProp) {
-  return eventProp.substring(2).toLowerCase();
-}
-
-function clickedRootScrollbar(event) {
-  return document.documentElement.clientWidth < event.clientX || document.documentElement.clientHeight < event.clientY;
-}
-/**
- * Listen for click events that occur somewhere in the document, outside of the element itself.
- * For instance, if you need to hide a menu when people click anywhere else on your page.
- */
-
-
-function ClickAwayListener(props) {
-  var children = props.children,
-      _props$disableReactTr = props.disableReactTree,
-      disableReactTree = _props$disableReactTr === void 0 ? false : _props$disableReactTr,
-      _props$mouseEvent = props.mouseEvent,
-      mouseEvent = _props$mouseEvent === void 0 ? 'onClick' : _props$mouseEvent,
-      onClickAway = props.onClickAway,
-      _props$touchEvent = props.touchEvent,
-      touchEvent = _props$touchEvent === void 0 ? 'onTouchEnd' : _props$touchEvent;
-  var movedRef = React.useRef(false);
-  var nodeRef = React.useRef(null);
-  var mountedRef = React.useRef(false);
-  var syntheticEventRef = React.useRef(false);
-  React.useEffect(function () {
-    mountedRef.current = true;
-    return function () {
-      mountedRef.current = false;
-    };
-  }, []); // can be removed once we drop support for non ref forwarding class components
-
-  var handleOwnRef = React.useCallback(function (instance) {
-    // #StrictMode ready
-    nodeRef.current = ReactDOM.findDOMNode(instance);
-  }, []);
-  var handleRef = (0, _useForkRef.default)(children.ref, handleOwnRef); // The handler doesn't take event.defaultPrevented into account:
-  //
-  // event.preventDefault() is meant to stop default behaviours like
-  // clicking a checkbox to check it, hitting a button to submit a form,
-  // and hitting left arrow to move the cursor in a text input etc.
-  // Only special HTML elements have these default behaviors.
-
-  var handleClickAway = (0, _useEventCallback.default)(function (event) {
-    // Given developers can stop the propagation of the synthetic event,
-    // we can only be confident with a positive value.
-    var insideReactTree = syntheticEventRef.current;
-    syntheticEventRef.current = false; // 1. IE 11 support, which trigger the handleClickAway even after the unbind
-    // 2. The child might render null.
-    // 3. Behave like a blur listener.
-
-    if (!mountedRef.current || !nodeRef.current || clickedRootScrollbar(event)) {
-      return;
-    } // Do not act if user performed touchmove
-
-
-    if (movedRef.current) {
-      movedRef.current = false;
-      return;
-    }
-
-    var insideDOM; // If not enough, can use https://github.com/DieterHolvoet/event-propagation-path/blob/master/propagationPath.js
-
-    if (event.composedPath) {
-      insideDOM = event.composedPath().indexOf(nodeRef.current) > -1;
-    } else {
-      // TODO v6 remove dead logic https://caniuse.com/#search=composedPath.
-      var doc = (0, _ownerDocument.default)(nodeRef.current);
-      insideDOM = !doc.documentElement.contains(event.target) || nodeRef.current.contains(event.target);
-    }
-
-    if (!insideDOM && (disableReactTree || !insideReactTree)) {
-      onClickAway(event);
-    }
-  }); // Keep track of mouse/touch events that bubbled up through the portal.
-
-  var createHandleSynthetic = function createHandleSynthetic(handlerName) {
-    return function (event) {
-      syntheticEventRef.current = true;
-      var childrenPropsHandler = children.props[handlerName];
-
-      if (childrenPropsHandler) {
-        childrenPropsHandler(event);
-      }
-    };
-  };
-
-  var childrenProps = {
-    ref: handleRef
-  };
-
-  if (touchEvent !== false) {
-    childrenProps[touchEvent] = createHandleSynthetic(touchEvent);
-  }
-
-  React.useEffect(function () {
-    if (touchEvent !== false) {
-      var mappedTouchEvent = mapEventPropToEvent(touchEvent);
-      var doc = (0, _ownerDocument.default)(nodeRef.current);
-
-      var handleTouchMove = function handleTouchMove() {
-        movedRef.current = true;
-      };
-
-      doc.addEventListener(mappedTouchEvent, handleClickAway);
-      doc.addEventListener('touchmove', handleTouchMove);
-      return function () {
-        doc.removeEventListener(mappedTouchEvent, handleClickAway);
-        doc.removeEventListener('touchmove', handleTouchMove);
-      };
-    }
-
-    return undefined;
-  }, [handleClickAway, touchEvent]);
-
-  if (mouseEvent !== false) {
-    childrenProps[mouseEvent] = createHandleSynthetic(mouseEvent);
-  }
-
-  React.useEffect(function () {
-    if (mouseEvent !== false) {
-      var mappedMouseEvent = mapEventPropToEvent(mouseEvent);
-      var doc = (0, _ownerDocument.default)(nodeRef.current);
-      doc.addEventListener(mappedMouseEvent, handleClickAway);
-      return function () {
-        doc.removeEventListener(mappedMouseEvent, handleClickAway);
-      };
-    }
-
-    return undefined;
-  }, [handleClickAway, mouseEvent]);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.cloneElement(children, childrenProps));
-}
-
-"development" !== "production" ? ClickAwayListener.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * The wrapped element.
-   */
-  children: _utils.elementAcceptingRef.isRequired,
-
-  /**
-   * If `true`, the React tree is ignored and only the DOM tree is considered.
-   * This prop changes how portaled elements are handled.
-   */
-  disableReactTree: _propTypes.default.bool,
-
-  /**
-   * The mouse event to listen to. You can disable the listener by providing `false`.
-   */
-  mouseEvent: _propTypes.default.oneOf(['onClick', 'onMouseDown', 'onMouseUp', false]),
-
-  /**
-   * Callback fired when a "click away" event is detected.
-   */
-  onClickAway: _propTypes.default.func.isRequired,
-
-  /**
-   * The touch event to listen to. You can disable the listener by providing `false`.
-   */
-  touchEvent: _propTypes.default.oneOf(['onTouchEnd', 'onTouchStart', false])
-} : void 0;
-
-if ("development" !== 'production') {
-  // eslint-disable-next-line
-  ClickAwayListener['propTypes' + ''] = (0, _utils.exactProp)(ClickAwayListener.propTypes);
-}
-
-var _default = ClickAwayListener;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","prop-types":"../node_modules/prop-types/index.js","../utils/ownerDocument":"../node_modules/@material-ui/core/esm/utils/ownerDocument.js","../utils/useForkRef":"../node_modules/@material-ui/core/esm/utils/useForkRef.js","../utils/useEventCallback":"../node_modules/@material-ui/core/esm/utils/useEventCallback.js","@material-ui/utils":"../node_modules/@material-ui/utils/esm/index.js"}],"../node_modules/@material-ui/core/esm/ClickAwayListener/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function () {
-    return _ClickAwayListener.default;
-  }
-});
-
-var _ClickAwayListener = _interopRequireDefault(require("./ClickAwayListener"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./ClickAwayListener":"../node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js"}],"../node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.styles = void 0;
-
-var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/defineProperty"));
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
-
-var React = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _clsx = _interopRequireDefault(require("clsx"));
-
-var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
-
-var _Paper = _interopRequireDefault(require("../Paper"));
-
-var _colorManipulator = require("../styles/colorManipulator");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var styles = function styles(theme) {
-  var emphasis = theme.palette.type === 'light' ? 0.8 : 0.98;
-  var backgroundColor = (0, _colorManipulator.emphasize)(theme.palette.background.default, emphasis);
-  return {
-    /* Styles applied to the root element. */
-    root: (0, _extends2.default)({}, theme.typography.body2, (0, _defineProperty2.default)({
-      color: theme.palette.getContrastText(backgroundColor),
-      backgroundColor: backgroundColor,
-      display: 'flex',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      padding: '6px 16px',
-      borderRadius: theme.shape.borderRadius,
-      flexGrow: 1
-    }, theme.breakpoints.up('sm'), {
-      flexGrow: 'initial',
-      minWidth: 288
-    })),
-
-    /* Styles applied to the message wrapper element. */
-    message: {
-      padding: '8px 0'
-    },
-
-    /* Styles applied to the action wrapper element if `action` is provided. */
-    action: {
-      display: 'flex',
-      alignItems: 'center',
-      marginLeft: 'auto',
-      paddingLeft: 16,
-      marginRight: -8
-    }
-  };
-};
-
-exports.styles = styles;
-var SnackbarContent = /*#__PURE__*/React.forwardRef(function SnackbarContent(props, ref) {
-  var action = props.action,
-      classes = props.classes,
-      className = props.className,
-      message = props.message,
-      _props$role = props.role,
-      role = _props$role === void 0 ? 'alert' : _props$role,
-      other = (0, _objectWithoutProperties2.default)(props, ["action", "classes", "className", "message", "role"]);
-  return /*#__PURE__*/React.createElement(_Paper.default, (0, _extends2.default)({
-    role: role,
-    square: true,
-    elevation: 6,
-    className: (0, _clsx.default)(classes.root, className),
-    ref: ref
-  }, other), /*#__PURE__*/React.createElement("div", {
-    className: classes.message
-  }, message), action ? /*#__PURE__*/React.createElement("div", {
-    className: classes.action
-  }, action) : null);
-});
-"development" !== "production" ? SnackbarContent.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * The action to display. It renders after the message, at the end of the snackbar.
-   */
-  action: _propTypes.default.node,
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: _propTypes.default.object,
-
-  /**
-   * @ignore
-   */
-  className: _propTypes.default.string,
-
-  /**
-   * The message to display.
-   */
-  message: _propTypes.default.node,
-
-  /**
-   * The ARIA role attribute of the element.
-   */
-  role: _propTypes.default.string
-} : void 0;
-
-var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiSnackbarContent'
-})(SnackbarContent);
-
-exports.default = _default;
-},{"@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","@babel/runtime/helpers/esm/defineProperty":"../node_modules/@babel/runtime/helpers/esm/defineProperty.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","../styles/withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js","../Paper":"../node_modules/@material-ui/core/esm/Paper/index.js","../styles/colorManipulator":"../node_modules/@material-ui/core/esm/styles/colorManipulator.js"}],"../node_modules/@material-ui/core/esm/SnackbarContent/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function () {
-    return _SnackbarContent.default;
-  }
-});
-
-var _SnackbarContent = _interopRequireDefault(require("./SnackbarContent"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./SnackbarContent":"../node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js"}],"../node_modules/@material-ui/core/esm/Snackbar/Snackbar.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.styles = void 0;
-
-var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/defineProperty"));
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
-
-var React = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _clsx = _interopRequireDefault(require("clsx"));
-
-var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
-
-var _transitions = require("../styles/transitions");
-
-var _ClickAwayListener = _interopRequireDefault(require("../ClickAwayListener"));
-
-var _useEventCallback = _interopRequireDefault(require("../utils/useEventCallback"));
-
-var _capitalize = _interopRequireDefault(require("../utils/capitalize"));
-
-var _createChainedFunction = _interopRequireDefault(require("../utils/createChainedFunction"));
-
-var _Grow = _interopRequireDefault(require("../Grow"));
-
-var _SnackbarContent = _interopRequireDefault(require("../SnackbarContent"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var styles = function styles(theme) {
-  var top1 = {
-    top: 8
-  };
-  var bottom1 = {
-    bottom: 8
-  };
-  var right = {
-    justifyContent: 'flex-end'
-  };
-  var left = {
-    justifyContent: 'flex-start'
-  };
-  var top3 = {
-    top: 24
-  };
-  var bottom3 = {
-    bottom: 24
-  };
-  var right3 = {
-    right: 24
-  };
-  var left3 = {
-    left: 24
-  };
-  var center = {
-    left: '50%',
-    right: 'auto',
-    transform: 'translateX(-50%)'
-  };
-  return {
-    /* Styles applied to the root element. */
-    root: {
-      zIndex: theme.zIndex.snackbar,
-      position: 'fixed',
-      display: 'flex',
-      left: 8,
-      right: 8,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'center' }}`. */
-    anchorOriginTopCenter: (0, _extends2.default)({}, top1, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({}, top3, center))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'center' }}`. */
-    anchorOriginBottomCenter: (0, _extends2.default)({}, bottom1, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({}, bottom3, center))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'right' }}`. */
-    anchorOriginTopRight: (0, _extends2.default)({}, top1, right, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
-      left: 'auto'
-    }, top3, right3))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'right' }}`. */
-    anchorOriginBottomRight: (0, _extends2.default)({}, bottom1, right, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
-      left: 'auto'
-    }, bottom3, right3))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'left' }}`. */
-    anchorOriginTopLeft: (0, _extends2.default)({}, top1, left, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
-      right: 'auto'
-    }, top3, left3))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'left' }}`. */
-    anchorOriginBottomLeft: (0, _extends2.default)({}, bottom1, left, (0, _defineProperty2.default)({}, theme.breakpoints.up('sm'), (0, _extends2.default)({
-      right: 'auto'
-    }, bottom3, left3)))
-  };
-};
-
-exports.styles = styles;
-var Snackbar = /*#__PURE__*/React.forwardRef(function Snackbar(props, ref) {
-  var action = props.action,
-      _props$anchorOrigin = props.anchorOrigin;
-  _props$anchorOrigin = _props$anchorOrigin === void 0 ? {
-    vertical: 'bottom',
-    horizontal: 'center'
-  } : _props$anchorOrigin;
-  var vertical = _props$anchorOrigin.vertical,
-      horizontal = _props$anchorOrigin.horizontal,
-      _props$autoHideDurati = props.autoHideDuration,
-      autoHideDuration = _props$autoHideDurati === void 0 ? null : _props$autoHideDurati,
-      children = props.children,
-      classes = props.classes,
-      className = props.className,
-      ClickAwayListenerProps = props.ClickAwayListenerProps,
-      ContentProps = props.ContentProps,
-      _props$disableWindowB = props.disableWindowBlurListener,
-      disableWindowBlurListener = _props$disableWindowB === void 0 ? false : _props$disableWindowB,
-      message = props.message,
-      onClose = props.onClose,
-      onEnter = props.onEnter,
-      onEntered = props.onEntered,
-      onEntering = props.onEntering,
-      onExit = props.onExit,
-      onExited = props.onExited,
-      onExiting = props.onExiting,
-      onMouseEnter = props.onMouseEnter,
-      onMouseLeave = props.onMouseLeave,
-      open = props.open,
-      resumeHideDuration = props.resumeHideDuration,
-      _props$TransitionComp = props.TransitionComponent,
-      TransitionComponent = _props$TransitionComp === void 0 ? _Grow.default : _props$TransitionComp,
-      _props$transitionDura = props.transitionDuration,
-      transitionDuration = _props$transitionDura === void 0 ? {
-    enter: _transitions.duration.enteringScreen,
-    exit: _transitions.duration.leavingScreen
-  } : _props$transitionDura,
-      TransitionProps = props.TransitionProps,
-      other = (0, _objectWithoutProperties2.default)(props, ["action", "anchorOrigin", "autoHideDuration", "children", "classes", "className", "ClickAwayListenerProps", "ContentProps", "disableWindowBlurListener", "message", "onClose", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "TransitionComponent", "transitionDuration", "TransitionProps"]);
-  var timerAutoHide = React.useRef();
-
-  var _React$useState = React.useState(true),
-      exited = _React$useState[0],
-      setExited = _React$useState[1];
-
-  var handleClose = (0, _useEventCallback.default)(function () {
-    if (onClose) {
-      onClose.apply(void 0, arguments);
-    }
-  });
-  var setAutoHideTimer = (0, _useEventCallback.default)(function (autoHideDurationParam) {
-    if (!onClose || autoHideDurationParam == null) {
-      return;
-    }
-
-    clearTimeout(timerAutoHide.current);
-    timerAutoHide.current = setTimeout(function () {
-      handleClose(null, 'timeout');
-    }, autoHideDurationParam);
-  });
-  React.useEffect(function () {
-    if (open) {
-      setAutoHideTimer(autoHideDuration);
-    }
-
-    return function () {
-      clearTimeout(timerAutoHide.current);
-    };
-  }, [open, autoHideDuration, setAutoHideTimer]); // Pause the timer when the user is interacting with the Snackbar
-  // or when the user hide the window.
-
-  var handlePause = function handlePause() {
-    clearTimeout(timerAutoHide.current);
-  }; // Restart the timer when the user is no longer interacting with the Snackbar
-  // or when the window is shown back.
-
-
-  var handleResume = React.useCallback(function () {
-    if (autoHideDuration != null) {
-      setAutoHideTimer(resumeHideDuration != null ? resumeHideDuration : autoHideDuration * 0.5);
-    }
-  }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
-
-  var handleMouseEnter = function handleMouseEnter(event) {
-    if (onMouseEnter) {
-      onMouseEnter(event);
-    }
-
-    handlePause();
-  };
-
-  var handleMouseLeave = function handleMouseLeave(event) {
-    if (onMouseLeave) {
-      onMouseLeave(event);
-    }
-
-    handleResume();
-  };
-
-  var handleClickAway = function handleClickAway(event) {
-    if (onClose) {
-      onClose(event, 'clickaway');
-    }
-  };
-
-  var handleExited = function handleExited() {
-    setExited(true);
-  };
-
-  var handleEnter = function handleEnter() {
-    setExited(false);
-  };
-
-  React.useEffect(function () {
-    if (!disableWindowBlurListener && open) {
-      window.addEventListener('focus', handleResume);
-      window.addEventListener('blur', handlePause);
-      return function () {
-        window.removeEventListener('focus', handleResume);
-        window.removeEventListener('blur', handlePause);
-      };
-    }
-
-    return undefined;
-  }, [disableWindowBlurListener, handleResume, open]); // So we only render active snackbars.
-
-  if (!open && exited) {
-    return null;
-  }
-
-  return /*#__PURE__*/React.createElement(_ClickAwayListener.default, (0, _extends2.default)({
-    onClickAway: handleClickAway
-  }, ClickAwayListenerProps), /*#__PURE__*/React.createElement("div", (0, _extends2.default)({
-    className: (0, _clsx.default)(classes.root, classes["anchorOrigin".concat((0, _capitalize.default)(vertical)).concat((0, _capitalize.default)(horizontal))], className),
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-    ref: ref
-  }, other), /*#__PURE__*/React.createElement(TransitionComponent, (0, _extends2.default)({
-    appear: true,
-    in: open,
-    onEnter: (0, _createChainedFunction.default)(handleEnter, onEnter),
-    onEntered: onEntered,
-    onEntering: onEntering,
-    onExit: onExit,
-    onExited: (0, _createChainedFunction.default)(handleExited, onExited),
-    onExiting: onExiting,
-    timeout: transitionDuration,
-    direction: vertical === 'top' ? 'down' : 'up'
-  }, TransitionProps), children || /*#__PURE__*/React.createElement(_SnackbarContent.default, (0, _extends2.default)({
-    message: message,
-    action: action
-  }, ContentProps)))));
-});
-"development" !== "production" ? Snackbar.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * The action to display. It renders after the message, at the end of the snackbar.
-   */
-  action: _propTypes.default.node,
-
-  /**
-   * The anchor of the `Snackbar`.
-   */
-  anchorOrigin: _propTypes.default.shape({
-    horizontal: _propTypes.default.oneOf(['center', 'left', 'right']).isRequired,
-    vertical: _propTypes.default.oneOf(['bottom', 'top']).isRequired
-  }),
-
-  /**
-   * The number of milliseconds to wait before automatically calling the
-   * `onClose` function. `onClose` should then set the state of the `open`
-   * prop to hide the Snackbar. This behavior is disabled by default with
-   * the `null` value.
-   */
-  autoHideDuration: _propTypes.default.number,
-
-  /**
-   * Replace the `SnackbarContent` component.
-   */
-  children: _propTypes.default.element,
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: _propTypes.default.object,
-
-  /**
-   * @ignore
-   */
-  className: _propTypes.default.string,
-
-  /**
-   * Props applied to the `ClickAwayListener` element.
-   */
-  ClickAwayListenerProps: _propTypes.default.object,
-
-  /**
-   * Props applied to the [`SnackbarContent`](/api/snackbar-content/) element.
-   */
-  ContentProps: _propTypes.default.object,
-
-  /**
-   * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
-   */
-  disableWindowBlurListener: _propTypes.default.bool,
-
-  /**
-   * When displaying multiple consecutive Snackbars from a parent rendering a single
-   * <Snackbar/>, add the key prop to ensure independent treatment of each message.
-   * e.g. <Snackbar key={message} />, otherwise, the message may update-in-place and
-   * features such as autoHideDuration may be canceled.
-   */
-  key: _propTypes.default.any,
-
-  /**
-   * The message to display.
-   */
-  message: _propTypes.default.node,
-
-  /**
-   * Callback fired when the component requests to be closed.
-   * Typically `onClose` is used to set state in the parent component,
-   * which is used to control the `Snackbar` `open` prop.
-   * The `reason` parameter can optionally be used to control the response to `onClose`,
-   * for example ignoring `clickaway`.
-   *
-   * @param {object} event The event source of the callback.
-   * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`.
-   */
-  onClose: _propTypes.default.func,
-
-  /**
-   * Callback fired before the transition is entering.
-   */
-  onEnter: _propTypes.default.func,
-
-  /**
-   * Callback fired when the transition has entered.
-   */
-  onEntered: _propTypes.default.func,
-
-  /**
-   * Callback fired when the transition is entering.
-   */
-  onEntering: _propTypes.default.func,
-
-  /**
-   * Callback fired before the transition is exiting.
-   */
-  onExit: _propTypes.default.func,
-
-  /**
-   * Callback fired when the transition has exited.
-   */
-  onExited: _propTypes.default.func,
-
-  /**
-   * Callback fired when the transition is exiting.
-   */
-  onExiting: _propTypes.default.func,
-
-  /**
-   * @ignore
-   */
-  onMouseEnter: _propTypes.default.func,
-
-  /**
-   * @ignore
-   */
-  onMouseLeave: _propTypes.default.func,
-
-  /**
-   * If `true`, `Snackbar` is open.
-   */
-  open: _propTypes.default.bool,
-
-  /**
-   * The number of milliseconds to wait before dismissing after user interaction.
-   * If `autoHideDuration` prop isn't specified, it does nothing.
-   * If `autoHideDuration` prop is specified but `resumeHideDuration` isn't,
-   * we default to `autoHideDuration / 2` ms.
-   */
-  resumeHideDuration: _propTypes.default.number,
-
-  /**
-   * The component used for the transition.
-   * [Follow this guide](/components/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
-   */
-  TransitionComponent: _propTypes.default.elementType,
-
-  /**
-   * The duration for the transition, in milliseconds.
-   * You may specify a single timeout for all transitions, or individually with an object.
-   */
-  transitionDuration: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.shape({
-    appear: _propTypes.default.number,
-    enter: _propTypes.default.number,
-    exit: _propTypes.default.number
-  })]),
-
-  /**
-   * Props applied to the [`Transition`](http://reactcommunity.org/react-transition-group/transition#Transition-props) element.
-   */
-  TransitionProps: _propTypes.default.object
-} : void 0;
-
-var _default = (0, _withStyles.default)(styles, {
-  flip: false,
-  name: 'MuiSnackbar'
-})(Snackbar);
-
-exports.default = _default;
-},{"@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","@babel/runtime/helpers/esm/defineProperty":"../node_modules/@babel/runtime/helpers/esm/defineProperty.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","../styles/withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js","../styles/transitions":"../node_modules/@material-ui/core/esm/styles/transitions.js","../ClickAwayListener":"../node_modules/@material-ui/core/esm/ClickAwayListener/index.js","../utils/useEventCallback":"../node_modules/@material-ui/core/esm/utils/useEventCallback.js","../utils/capitalize":"../node_modules/@material-ui/core/esm/utils/capitalize.js","../utils/createChainedFunction":"../node_modules/@material-ui/core/esm/utils/createChainedFunction.js","../Grow":"../node_modules/@material-ui/core/esm/Grow/index.js","../SnackbarContent":"../node_modules/@material-ui/core/esm/SnackbarContent/index.js"}],"../node_modules/@material-ui/core/esm/Snackbar/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function () {
-    return _Snackbar.default;
-  }
-});
-
-var _Snackbar = _interopRequireDefault(require("./Snackbar"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Snackbar":"../node_modules/@material-ui/core/esm/Snackbar/Snackbar.js"}],"../node_modules/@material-ui/core/esm/utils/deprecatedPropType.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = deprecatedPropType;
-
-function deprecatedPropType(validator, reason) {
-  if ("development" === 'production') {
-    return function () {
-      return null;
-    };
-  }
-
-  return function (props, propName, componentName, location, propFullName) {
-    var componentNameSafe = componentName || '<<anonymous>>';
-    var propFullNameSafe = propFullName || propName;
-
-    if (typeof props[propName] !== 'undefined') {
-      return new Error("The ".concat(location, " `").concat(propFullNameSafe, "` of ") + "`".concat(componentNameSafe, "` is deprecated. ").concat(reason));
-    }
-
-    return null;
-  };
-}
-},{}],"../node_modules/@material-ui/core/esm/utils/unsupportedProp.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = unsupportedProp;
-
-function unsupportedProp(props, propName, componentName, location, propFullName) {
-  if ("development" === 'production') {
-    return null;
-  }
-
-  var propFullNameSafe = propFullName || propName;
-
-  if (typeof props[propName] !== 'undefined') {
-    return new Error("The prop `".concat(propFullNameSafe, "` is not supported. Please remove it."));
-  }
-
-  return null;
-}
-},{}],"../node_modules/@material-ui/core/esm/utils/unstable_useId.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useId;
-
-var React = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * Private module reserved for @material-ui/x packages.
- */
-function useId(idOverride) {
-  var _React$useState = React.useState(idOverride),
-      defaultId = _React$useState[0],
-      setDefaultId = _React$useState[1];
-
-  var id = idOverride || defaultId;
-  React.useEffect(function () {
-    if (defaultId == null) {
-      // Fallback to this default id when possible.
-      // Use the random value for client-side rendering only.
-      // We can't use it server-side.
-      setDefaultId("mui-".concat(Math.round(Math.random() * 1e5)));
-    }
-  }, [defaultId]);
-  return id;
-}
-},{"react":"../node_modules/react/index.js"}],"../node_modules/@material-ui/core/esm/utils/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "capitalize", {
-  enumerable: true,
-  get: function () {
-    return _capitalize.default;
-  }
-});
-Object.defineProperty(exports, "createChainedFunction", {
-  enumerable: true,
-  get: function () {
-    return _createChainedFunction.default;
-  }
-});
-Object.defineProperty(exports, "createSvgIcon", {
-  enumerable: true,
-  get: function () {
-    return _createSvgIcon.default;
-  }
-});
-Object.defineProperty(exports, "debounce", {
-  enumerable: true,
-  get: function () {
-    return _debounce.default;
-  }
-});
-Object.defineProperty(exports, "deprecatedPropType", {
-  enumerable: true,
-  get: function () {
-    return _deprecatedPropType.default;
-  }
-});
-Object.defineProperty(exports, "isMuiElement", {
-  enumerable: true,
-  get: function () {
-    return _isMuiElement.default;
-  }
-});
-Object.defineProperty(exports, "ownerDocument", {
-  enumerable: true,
-  get: function () {
-    return _ownerDocument.default;
-  }
-});
-Object.defineProperty(exports, "ownerWindow", {
-  enumerable: true,
-  get: function () {
-    return _ownerWindow.default;
-  }
-});
-Object.defineProperty(exports, "requirePropFactory", {
-  enumerable: true,
-  get: function () {
-    return _requirePropFactory.default;
-  }
-});
-Object.defineProperty(exports, "setRef", {
-  enumerable: true,
-  get: function () {
-    return _setRef.default;
-  }
-});
-Object.defineProperty(exports, "unsupportedProp", {
-  enumerable: true,
-  get: function () {
-    return _unsupportedProp.default;
-  }
-});
-Object.defineProperty(exports, "useControlled", {
-  enumerable: true,
-  get: function () {
-    return _useControlled.default;
-  }
-});
-Object.defineProperty(exports, "useEventCallback", {
-  enumerable: true,
-  get: function () {
-    return _useEventCallback.default;
-  }
-});
-Object.defineProperty(exports, "useForkRef", {
-  enumerable: true,
-  get: function () {
-    return _useForkRef.default;
-  }
-});
-Object.defineProperty(exports, "unstable_useId", {
-  enumerable: true,
-  get: function () {
-    return _unstable_useId.default;
-  }
-});
-Object.defineProperty(exports, "useIsFocusVisible", {
-  enumerable: true,
-  get: function () {
-    return _useIsFocusVisible.default;
-  }
-});
-
-var _capitalize = _interopRequireDefault(require("./capitalize"));
-
-var _createChainedFunction = _interopRequireDefault(require("./createChainedFunction"));
-
-var _createSvgIcon = _interopRequireDefault(require("./createSvgIcon"));
-
-var _debounce = _interopRequireDefault(require("./debounce"));
-
-var _deprecatedPropType = _interopRequireDefault(require("./deprecatedPropType"));
-
-var _isMuiElement = _interopRequireDefault(require("./isMuiElement"));
-
-var _ownerDocument = _interopRequireDefault(require("./ownerDocument"));
-
-var _ownerWindow = _interopRequireDefault(require("./ownerWindow"));
-
-var _requirePropFactory = _interopRequireDefault(require("./requirePropFactory"));
-
-var _setRef = _interopRequireDefault(require("./setRef"));
-
-var _unsupportedProp = _interopRequireDefault(require("./unsupportedProp"));
-
-var _useControlled = _interopRequireDefault(require("./useControlled"));
-
-var _useEventCallback = _interopRequireDefault(require("./useEventCallback"));
-
-var _useForkRef = _interopRequireDefault(require("./useForkRef"));
-
-var _unstable_useId = _interopRequireDefault(require("./unstable_useId"));
-
-var _useIsFocusVisible = _interopRequireDefault(require("./useIsFocusVisible"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./capitalize":"../node_modules/@material-ui/core/esm/utils/capitalize.js","./createChainedFunction":"../node_modules/@material-ui/core/esm/utils/createChainedFunction.js","./createSvgIcon":"../node_modules/@material-ui/core/esm/utils/createSvgIcon.js","./debounce":"../node_modules/@material-ui/core/esm/utils/debounce.js","./deprecatedPropType":"../node_modules/@material-ui/core/esm/utils/deprecatedPropType.js","./isMuiElement":"../node_modules/@material-ui/core/esm/utils/isMuiElement.js","./ownerDocument":"../node_modules/@material-ui/core/esm/utils/ownerDocument.js","./ownerWindow":"../node_modules/@material-ui/core/esm/utils/ownerWindow.js","./requirePropFactory":"../node_modules/@material-ui/core/esm/utils/requirePropFactory.js","./setRef":"../node_modules/@material-ui/core/esm/utils/setRef.js","./unsupportedProp":"../node_modules/@material-ui/core/esm/utils/unsupportedProp.js","./useControlled":"../node_modules/@material-ui/core/esm/utils/useControlled.js","./useEventCallback":"../node_modules/@material-ui/core/esm/utils/useEventCallback.js","./useForkRef":"../node_modules/@material-ui/core/esm/utils/useForkRef.js","./unstable_useId":"../node_modules/@material-ui/core/esm/utils/unstable_useId.js","./useIsFocusVisible":"../node_modules/@material-ui/core/esm/utils/useIsFocusVisible.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _utils = require("@material-ui/core/utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * @ignore - internal component.
- */
-var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
-  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
-}), 'SuccessOutlined');
-
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _utils = require("@material-ui/core/utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * @ignore - internal component.
- */
-var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
-  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
-}), 'ReportProblemOutlined');
-
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _utils = require("@material-ui/core/utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * @ignore - internal component.
- */
-var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
-  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-}), 'ErrorOutline');
-
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _utils = require("@material-ui/core/utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * @ignore - internal component.
- */
-var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
-  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
-}), 'InfoOutlined');
-
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _utils = require("@material-ui/core/utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * @ignore - internal component.
- */
-var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path", {
-  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-}), 'Close');
-
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/Alert/Alert.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.styles = void 0;
-
-var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
-
-var React = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _clsx = _interopRequireDefault(require("clsx"));
-
-var _styles = require("@material-ui/core/styles");
-
-var _Paper = _interopRequireDefault(require("@material-ui/core/Paper"));
-
-var _SuccessOutlined = _interopRequireDefault(require("../internal/svg-icons/SuccessOutlined"));
-
-var _ReportProblemOutlined = _interopRequireDefault(require("../internal/svg-icons/ReportProblemOutlined"));
-
-var _ErrorOutline = _interopRequireDefault(require("../internal/svg-icons/ErrorOutline"));
-
-var _InfoOutlined = _interopRequireDefault(require("../internal/svg-icons/InfoOutlined"));
-
-var _Close = _interopRequireDefault(require("../internal/svg-icons/Close"));
-
-var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
-
-var _utils = require("@material-ui/core/utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var styles = function styles(theme) {
-  var getColor = theme.palette.type === 'light' ? _styles.darken : _styles.lighten;
-  var getBackgroundColor = theme.palette.type === 'light' ? _styles.lighten : _styles.darken;
-  return {
-    /* Styles applied to the root element. */
-    root: (0, _extends2.default)({}, theme.typography.body2, {
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: 'transparent',
-      display: 'flex',
-      padding: '6px 16px'
-    }),
-
-    /* Styles applied to the root element if `variant="standard"` and `color="success"`. */
-    standardSuccess: {
-      color: getColor(theme.palette.success.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
-      '& $icon': {
-        color: theme.palette.success.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="standard"` and `color="info"`. */
-    standardInfo: {
-      color: getColor(theme.palette.info.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
-      '& $icon': {
-        color: theme.palette.info.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="standard"` and `color="warning"`. */
-    standardWarning: {
-      color: getColor(theme.palette.warning.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.9),
-      '& $icon': {
-        color: theme.palette.warning.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="standard"` and `color="error"`. */
-    standardError: {
-      color: getColor(theme.palette.error.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.error.main, 0.9),
-      '& $icon': {
-        color: theme.palette.error.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="success"`. */
-    outlinedSuccess: {
-      color: getColor(theme.palette.success.main, 0.6),
-      border: "1px solid ".concat(theme.palette.success.main),
-      '& $icon': {
-        color: theme.palette.success.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="info"`. */
-    outlinedInfo: {
-      color: getColor(theme.palette.info.main, 0.6),
-      border: "1px solid ".concat(theme.palette.info.main),
-      '& $icon': {
-        color: theme.palette.info.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="warning"`. */
-    outlinedWarning: {
-      color: getColor(theme.palette.warning.main, 0.6),
-      border: "1px solid ".concat(theme.palette.warning.main),
-      '& $icon': {
-        color: theme.palette.warning.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="error"`. */
-    outlinedError: {
-      color: getColor(theme.palette.error.main, 0.6),
-      border: "1px solid ".concat(theme.palette.error.main),
-      '& $icon': {
-        color: theme.palette.error.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="success"`. */
-    filledSuccess: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.success.main
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="info"`. */
-    filledInfo: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.info.main
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="warning"`. */
-    filledWarning: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.warning.main
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="error"`. */
-    filledError: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.error.main
-    },
-
-    /* Styles applied to the icon wrapper element. */
-    icon: {
-      marginRight: 12,
-      padding: '7px 0',
-      display: 'flex',
-      fontSize: 22,
-      opacity: 0.9
-    },
-
-    /* Styles applied to the message wrapper element. */
-    message: {
-      padding: '8px 0'
-    },
-
-    /* Styles applied to the action wrapper element if `action` is provided. */
-    action: {
-      display: 'flex',
-      alignItems: 'center',
-      marginLeft: 'auto',
-      paddingLeft: 16,
-      marginRight: -8
-    }
-  };
-};
-
-exports.styles = styles;
-var defaultIconMapping = {
-  success: /*#__PURE__*/React.createElement(_SuccessOutlined.default, {
-    fontSize: "inherit"
-  }),
-  warning: /*#__PURE__*/React.createElement(_ReportProblemOutlined.default, {
-    fontSize: "inherit"
-  }),
-  error: /*#__PURE__*/React.createElement(_ErrorOutline.default, {
-    fontSize: "inherit"
-  }),
-  info: /*#__PURE__*/React.createElement(_InfoOutlined.default, {
-    fontSize: "inherit"
-  })
-};
-
-var _ref = /*#__PURE__*/React.createElement(_Close.default, {
-  fontSize: "small"
-});
-
-var Alert = /*#__PURE__*/React.forwardRef(function Alert(props, ref) {
-  var action = props.action,
-      children = props.children,
-      classes = props.classes,
-      className = props.className,
-      _props$closeText = props.closeText,
-      closeText = _props$closeText === void 0 ? 'Close' : _props$closeText,
-      color = props.color,
-      icon = props.icon,
-      _props$iconMapping = props.iconMapping,
-      iconMapping = _props$iconMapping === void 0 ? defaultIconMapping : _props$iconMapping,
-      onClose = props.onClose,
-      _props$role = props.role,
-      role = _props$role === void 0 ? 'alert' : _props$role,
-      _props$severity = props.severity,
-      severity = _props$severity === void 0 ? 'success' : _props$severity,
-      _props$variant = props.variant,
-      variant = _props$variant === void 0 ? 'standard' : _props$variant,
-      other = (0, _objectWithoutProperties2.default)(props, ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant"]);
-  return /*#__PURE__*/React.createElement(_Paper.default, (0, _extends2.default)({
-    role: role,
-    square: true,
-    elevation: 0,
-    className: (0, _clsx.default)(classes.root, classes["".concat(variant).concat((0, _utils.capitalize)(color || severity))], className),
-    ref: ref
-  }, other), icon !== false ? /*#__PURE__*/React.createElement("div", {
-    className: classes.icon
-  }, icon || iconMapping[severity] || defaultIconMapping[severity]) : null, /*#__PURE__*/React.createElement("div", {
-    className: classes.message
-  }, children), action != null ? /*#__PURE__*/React.createElement("div", {
-    className: classes.action
-  }, action) : null, action == null && onClose ? /*#__PURE__*/React.createElement("div", {
-    className: classes.action
-  }, /*#__PURE__*/React.createElement(_IconButton.default, {
-    size: "small",
-    "aria-label": closeText,
-    title: closeText,
-    color: "inherit",
-    onClick: onClose
-  }, _ref)) : null);
-});
-"development" !== "production" ? Alert.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * The action to display. It renders after the message, at the end of the alert.
-   */
-  action: _propTypes.default.node,
-
-  /**
-   * The content of the component.
-   */
-  children: _propTypes.default.node,
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: _propTypes.default.object,
-
-  /**
-   * @ignore
-   */
-  className: _propTypes.default.string,
-
-  /**
-   * Override the default label for the *close popup* icon button.
-   *
-   * For localization purposes, you can use the provided [translations](/guides/localization/).
-   */
-  closeText: _propTypes.default.string,
-
-  /**
-   * The main color for the alert. Unless provided, the value is taken from the `severity` prop.
-   */
-  color: _propTypes.default.oneOf(['error', 'info', 'success', 'warning']),
-
-  /**
-   * Override the icon displayed before the children.
-   * Unless provided, the icon is mapped to the value of the `severity` prop.
-   */
-  icon: _propTypes.default.node,
-
-  /**
-   * The component maps the `severity` prop to a range of different icons,
-   * for instance success to `<SuccessOutlined>`.
-   * If you wish to change this mapping, you can provide your own.
-   * Alternatively, you can use the `icon` prop to override the icon displayed.
-   */
-  iconMapping: _propTypes.default.shape({
-    error: _propTypes.default.node,
-    info: _propTypes.default.node,
-    success: _propTypes.default.node,
-    warning: _propTypes.default.node
-  }),
-
-  /**
-   * Callback fired when the component requests to be closed.
-   * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
-   *
-   * @param {object} event The event source of the callback.
-   */
-  onClose: _propTypes.default.func,
-
-  /**
-   * The ARIA role attribute of the element.
-   */
-  role: _propTypes.default.string,
-
-  /**
-   * The severity of the alert. This defines the color and icon used.
-   */
-  severity: _propTypes.default.oneOf(['error', 'info', 'success', 'warning']),
-
-  /**
-   * The variant to use.
-   */
-  variant: _propTypes.default.oneOf(['filled', 'outlined', 'standard'])
-} : void 0;
-
-var _default = (0, _styles.withStyles)(styles, {
-  name: 'MuiAlert'
-})(Alert);
-
-exports.default = _default;
-},{"@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","@material-ui/core/Paper":"../node_modules/@material-ui/core/esm/Paper/index.js","../internal/svg-icons/SuccessOutlined":"../node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js","../internal/svg-icons/ReportProblemOutlined":"../node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js","../internal/svg-icons/ErrorOutline":"../node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js","../internal/svg-icons/InfoOutlined":"../node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js","../internal/svg-icons/Close":"../node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js","@material-ui/core/IconButton":"../node_modules/@material-ui/core/esm/IconButton/index.js","@material-ui/core/utils":"../node_modules/@material-ui/core/esm/utils/index.js"}],"../node_modules/@material-ui/lab/esm/Alert/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function () {
-    return _Alert.default;
-  }
-});
-
-var _Alert = _interopRequireDefault(require("./Alert"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Alert":"../node_modules/@material-ui/lab/esm/Alert/Alert.js"}],"component/pages/SignUp/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@material-ui/core/Avatar":"../node_modules/@material-ui/core/esm/Avatar/index.js","@material-ui/core/Button":"../node_modules/@material-ui/core/esm/Button/index.js","@material-ui/core/CssBaseline":"../node_modules/@material-ui/core/esm/CssBaseline/index.js","@material-ui/core/TextField":"../node_modules/@material-ui/core/esm/TextField/index.js","@material-ui/core/FormControlLabel":"../node_modules/@material-ui/core/esm/FormControlLabel/index.js","@material-ui/core/Checkbox":"../node_modules/@material-ui/core/esm/Checkbox/index.js","@material-ui/core/Link":"../node_modules/@material-ui/core/esm/Link/index.js","@material-ui/core/Grid":"../node_modules/@material-ui/core/esm/Grid/index.js","@material-ui/core/Box":"../node_modules/@material-ui/core/esm/Box/index.js","@material-ui/core/Snackbar":"../node_modules/@material-ui/core/esm/Snackbar/index.js","@material-ui/lab/Alert":"../node_modules/@material-ui/lab/esm/Alert/index.js","@material-ui/icons/LockOutlined":"../node_modules/@material-ui/icons/LockOutlined.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","@material-ui/core/Container":"../node_modules/@material-ui/core/esm/Container/index.js","../../config/url":"component/config/url/index.js","../../Provider":"component/Provider/index.js","localforage":"../node_modules/localforage/dist/localforage.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../config/actions":"component/config/actions/index.js","universal-cookie":"../node_modules/universal-cookie/es6/index.js"}],"component/pages/SignUp/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -63646,8 +63668,7 @@ var _default = () => {
           _localforage.default.setItem('user', resp).then(function (value) {
             dispatch((0, _actions.actionCreator)(_actions.LOGGEDIN));
             dispatch((0, _actions.actionCreator)(_actions.USER_DETAILS, resp));
-          }).catch(function (err) {
-            console.log(err); // implement saving to localStorage 
+          }).catch(function (err) {// implement saving to localStorage 
           });
         }
       }).catch(err => {
@@ -64112,458 +64133,7 @@ var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", 
 }), 'AccountCircle');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/@material-ui/core/esm/Switch/Switch.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.styles = void 0;
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
-
-var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
-
-var React = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _clsx = _interopRequireDefault(require("clsx"));
-
-var _utils = require("@material-ui/utils");
-
-var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
-
-var _colorManipulator = require("../styles/colorManipulator");
-
-var _capitalize = _interopRequireDefault(require("../utils/capitalize"));
-
-var _SwitchBase = _interopRequireDefault(require("../internal/SwitchBase"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// @inheritedComponent IconButton
-var styles = function styles(theme) {
-  return {
-    /* Styles applied to the root element. */
-    root: {
-      display: 'inline-flex',
-      width: 34 + 12 * 2,
-      height: 14 + 12 * 2,
-      overflow: 'hidden',
-      padding: 12,
-      boxSizing: 'border-box',
-      position: 'relative',
-      flexShrink: 0,
-      zIndex: 0,
-      // Reset the stacking context.
-      verticalAlign: 'middle',
-      // For correct alignment with the text.
-      '@media print': {
-        colorAdjust: 'exact'
-      }
-    },
-
-    /* Styles applied to the root element if `edge="start"`. */
-    edgeStart: {
-      marginLeft: -8
-    },
-
-    /* Styles applied to the root element if `edge="end"`. */
-    edgeEnd: {
-      marginRight: -8
-    },
-
-    /* Styles applied to the internal `SwitchBase` component's `root` class. */
-    switchBase: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      zIndex: 1,
-      // Render above the focus ripple.
-      color: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[400],
-      transition: theme.transitions.create(['left', 'transform'], {
-        duration: theme.transitions.duration.shortest
-      }),
-      '&$checked': {
-        transform: 'translateX(20px)'
-      },
-      '&$disabled': {
-        color: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[800]
-      },
-      '&$checked + $track': {
-        opacity: 0.5
-      },
-      '&$disabled + $track': {
-        opacity: theme.palette.type === 'light' ? 0.12 : 0.1
-      }
-    },
-
-    /* Styles applied to the internal SwitchBase component's root element if `color="primary"`. */
-    colorPrimary: {
-      '&$checked': {
-        color: theme.palette.primary.main,
-        '&:hover': {
-          backgroundColor: (0, _colorManipulator.fade)(theme.palette.primary.main, theme.palette.action.hoverOpacity),
-          '@media (hover: none)': {
-            backgroundColor: 'transparent'
-          }
-        }
-      },
-      '&$disabled': {
-        color: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[800]
-      },
-      '&$checked + $track': {
-        backgroundColor: theme.palette.primary.main
-      },
-      '&$disabled + $track': {
-        backgroundColor: theme.palette.type === 'light' ? theme.palette.common.black : theme.palette.common.white
-      }
-    },
-
-    /* Styles applied to the internal SwitchBase component's root element if `color="secondary"`. */
-    colorSecondary: {
-      '&$checked': {
-        color: theme.palette.secondary.main,
-        '&:hover': {
-          backgroundColor: (0, _colorManipulator.fade)(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
-          '@media (hover: none)': {
-            backgroundColor: 'transparent'
-          }
-        }
-      },
-      '&$disabled': {
-        color: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[800]
-      },
-      '&$checked + $track': {
-        backgroundColor: theme.palette.secondary.main
-      },
-      '&$disabled + $track': {
-        backgroundColor: theme.palette.type === 'light' ? theme.palette.common.black : theme.palette.common.white
-      }
-    },
-
-    /* Styles applied to the root element if `size="small"`. */
-    sizeSmall: {
-      width: 40,
-      height: 24,
-      padding: 7,
-      '& $thumb': {
-        width: 16,
-        height: 16
-      },
-      '& $switchBase': {
-        padding: 4,
-        '&$checked': {
-          transform: 'translateX(16px)'
-        }
-      }
-    },
-
-    /* Pseudo-class applied to the internal `SwitchBase` component's `checked` class. */
-    checked: {},
-
-    /* Pseudo-class applied to the internal SwitchBase component's disabled class. */
-    disabled: {},
-
-    /* Styles applied to the internal SwitchBase component's input element. */
-    input: {
-      left: '-100%',
-      width: '300%'
-    },
-
-    /* Styles used to create the thumb passed to the internal `SwitchBase` component `icon` prop. */
-    thumb: {
-      boxShadow: theme.shadows[1],
-      backgroundColor: 'currentColor',
-      width: 20,
-      height: 20,
-      borderRadius: '50%'
-    },
-
-    /* Styles applied to the track element. */
-    track: {
-      height: '100%',
-      width: '100%',
-      borderRadius: 14 / 2,
-      zIndex: -1,
-      transition: theme.transitions.create(['opacity', 'background-color'], {
-        duration: theme.transitions.duration.shortest
-      }),
-      backgroundColor: theme.palette.type === 'light' ? theme.palette.common.black : theme.palette.common.white,
-      opacity: theme.palette.type === 'light' ? 0.38 : 0.3
-    }
-  };
-};
-
-exports.styles = styles;
-var Switch = /*#__PURE__*/React.forwardRef(function Switch(props, ref) {
-  var classes = props.classes,
-      className = props.className,
-      _props$color = props.color,
-      color = _props$color === void 0 ? 'secondary' : _props$color,
-      _props$edge = props.edge,
-      edge = _props$edge === void 0 ? false : _props$edge,
-      _props$size = props.size,
-      size = _props$size === void 0 ? 'medium' : _props$size,
-      other = (0, _objectWithoutProperties2.default)(props, ["classes", "className", "color", "edge", "size"]);
-  var icon = /*#__PURE__*/React.createElement("span", {
-    className: classes.thumb
-  });
-  return /*#__PURE__*/React.createElement("span", {
-    className: (0, _clsx.default)(classes.root, className, {
-      'start': classes.edgeStart,
-      'end': classes.edgeEnd
-    }[edge], size === "small" && classes["size".concat((0, _capitalize.default)(size))])
-  }, /*#__PURE__*/React.createElement(_SwitchBase.default, (0, _extends2.default)({
-    type: "checkbox",
-    icon: icon,
-    checkedIcon: icon,
-    classes: {
-      root: (0, _clsx.default)(classes.switchBase, classes["color".concat((0, _capitalize.default)(color))]),
-      input: classes.input,
-      checked: classes.checked,
-      disabled: classes.disabled
-    },
-    ref: ref
-  }, other)), /*#__PURE__*/React.createElement("span", {
-    className: classes.track
-  }));
-});
-"development" !== "production" ? Switch.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * If `true`, the component is checked.
-   */
-  checked: _propTypes.default.bool,
-
-  /**
-   * The icon to display when the component is checked.
-   */
-  checkedIcon: _propTypes.default.node,
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: _propTypes.default.object,
-
-  /**
-   * @ignore
-   */
-  className: _propTypes.default.string,
-
-  /**
-   * The color of the component. It supports those theme colors that make sense for this component.
-   */
-  color: _propTypes.default.oneOf(['default', 'primary', 'secondary']),
-
-  /**
-   * @ignore
-   */
-  defaultChecked: _propTypes.default.bool,
-
-  /**
-   * If `true`, the switch will be disabled.
-   */
-  disabled: _propTypes.default.bool,
-
-  /**
-   * If `true`, the ripple effect will be disabled.
-   */
-  disableRipple: _propTypes.default.bool,
-
-  /**
-   * If given, uses a negative margin to counteract the padding on one
-   * side (this is often helpful for aligning the left or right
-   * side of the icon with content above or below, without ruining the border
-   * size and shape).
-   */
-  edge: _propTypes.default.oneOf(['end', 'start', false]),
-
-  /**
-   * The icon to display when the component is unchecked.
-   */
-  icon: _propTypes.default.node,
-
-  /**
-   * The id of the `input` element.
-   */
-  id: _propTypes.default.string,
-
-  /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
-   */
-  inputProps: _propTypes.default.object,
-
-  /**
-   * Pass a ref to the `input` element.
-   */
-  inputRef: _utils.refType,
-
-  /**
-   * Callback fired when the state is changed.
-   *
-   * @param {object} event The event source of the callback.
-   * You can pull out the new value by accessing `event.target.value` (string).
-   * You can pull out the new checked state by accessing `event.target.checked` (boolean).
-   */
-  onChange: _propTypes.default.func,
-
-  /**
-   * If `true`, the `input` element will be required.
-   */
-  required: _propTypes.default.bool,
-
-  /**
-   * The size of the switch.
-   * `small` is equivalent to the dense switch styling.
-   */
-  size: _propTypes.default.oneOf(['medium', 'small']),
-
-  /**
-   * The value of the component. The DOM API casts this to a string.
-   * The browser uses "on" as the default value.
-   */
-  value: _propTypes.default.any
-} : void 0;
-
-var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiSwitch'
-})(Switch);
-
-exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","@material-ui/utils":"../node_modules/@material-ui/utils/esm/index.js","../styles/withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js","../styles/colorManipulator":"../node_modules/@material-ui/core/esm/styles/colorManipulator.js","../utils/capitalize":"../node_modules/@material-ui/core/esm/utils/capitalize.js","../internal/SwitchBase":"../node_modules/@material-ui/core/esm/internal/SwitchBase.js"}],"../node_modules/@material-ui/core/esm/Switch/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function () {
-    return _Switch.default;
-  }
-});
-
-var _Switch = _interopRequireDefault(require("./Switch"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Switch":"../node_modules/@material-ui/core/esm/Switch/Switch.js"}],"../node_modules/@material-ui/core/esm/FormGroup/FormGroup.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.styles = void 0;
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
-
-var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutProperties"));
-
-var React = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _clsx = _interopRequireDefault(require("clsx"));
-
-var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var styles = {
-  /* Styles applied to the root element. */
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexWrap: 'wrap'
-  },
-
-  /* Styles applied to the root element if `row={true}`. */
-  row: {
-    flexDirection: 'row'
-  }
-};
-/**
- * `FormGroup` wraps controls such as `Checkbox` and `Switch`.
- * It provides compact row layout.
- * For the `Radio`, you should be using the `RadioGroup` component instead of this one.
- */
-
-exports.styles = styles;
-var FormGroup = /*#__PURE__*/React.forwardRef(function FormGroup(props, ref) {
-  var classes = props.classes,
-      className = props.className,
-      _props$row = props.row,
-      row = _props$row === void 0 ? false : _props$row,
-      other = (0, _objectWithoutProperties2.default)(props, ["classes", "className", "row"]);
-  return /*#__PURE__*/React.createElement("div", (0, _extends2.default)({
-    className: (0, _clsx.default)(classes.root, className, row && classes.row),
-    ref: ref
-  }, other));
-});
-"development" !== "production" ? FormGroup.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * The content of the component.
-   */
-  children: _propTypes.default.node,
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: _propTypes.default.object,
-
-  /**
-   * @ignore
-   */
-  className: _propTypes.default.string,
-
-  /**
-   * Display group of elements in a compact row.
-   */
-  row: _propTypes.default.bool
-} : void 0;
-
-var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiFormGroup'
-})(FormGroup);
-
-exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutProperties":"../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js","react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","clsx":"../node_modules/clsx/dist/clsx.m.js","../styles/withStyles":"../node_modules/@material-ui/core/esm/styles/withStyles.js"}],"../node_modules/@material-ui/core/esm/FormGroup/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function () {
-    return _FormGroup.default;
-  }
-});
-
-var _FormGroup = _interopRequireDefault(require("./FormGroup"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./FormGroup":"../node_modules/@material-ui/core/esm/FormGroup/FormGroup.js"}],"../node_modules/@material-ui/core/esm/ListItem/ListItem.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/@material-ui/core/esm/ListItem/ListItem.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -65124,15 +64694,19 @@ var _Menu = _interopRequireDefault(require("@material-ui/icons/Menu"));
 
 var _AccountCircle = _interopRequireDefault(require("@material-ui/icons/AccountCircle"));
 
-var _Switch = _interopRequireDefault(require("@material-ui/core/Switch"));
-
-var _FormControlLabel = _interopRequireDefault(require("@material-ui/core/FormControlLabel"));
-
-var _FormGroup = _interopRequireDefault(require("@material-ui/core/FormGroup"));
-
 var _MenuItem = _interopRequireDefault(require("@material-ui/core/MenuItem"));
 
 var _Menu2 = _interopRequireDefault(require("@material-ui/core/Menu"));
+
+var _actions = require("../config/actions");
+
+var _reactRouterDom = require("react-router-dom");
+
+var _localforage = _interopRequireDefault(require("localforage"));
+
+var _universalCookie = _interopRequireDefault(require("universal-cookie"));
+
+var _Provider = require("../Provider");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65140,6 +64714,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+const cookies = new _universalCookie.default();
 const useStyles = (0, _styles.makeStyles)(theme => ({
   root: {
     // flexGrow: 1,
@@ -65161,6 +64736,10 @@ function Header() {
   const [anchorEl, setAnchorEl] = _react.default.useState(null);
 
   const open = Boolean(anchorEl);
+  const history = (0, _reactRouterDom.useHistory)();
+  const {
+    dispatch
+  } = (0, _Provider.useGlobalStore)();
 
   const handleChange = event => {
     setAuth(event.target.checked);
@@ -65170,20 +64749,26 @@ function Header() {
     setAnchorEl(event.currentTarget);
   };
 
+  const logout = () => {
+    handleClose();
+
+    _localforage.default.removeItem('twit_login').then(function (value) {
+      cookies.remove('twit_token');
+      dispatch((0, _actions.actionCreator)(_actions.LOGGEDOUT));
+      history.push('/login');
+    }).catch(function (err) {
+      // This code runs if there were any errors
+      console.log(err);
+    });
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.root
-  }, /*#__PURE__*/_react.default.createElement(_FormGroup.default, null, /*#__PURE__*/_react.default.createElement(_FormControlLabel.default, {
-    control: /*#__PURE__*/_react.default.createElement(_Switch.default, {
-      checked: auth,
-      onChange: handleChange,
-      "aria-label": "login switch"
-    }),
-    label: auth ? 'Logout' : 'Login'
-  })), /*#__PURE__*/_react.default.createElement(_AppBar.default, {
+  }, /*#__PURE__*/_react.default.createElement(_AppBar.default, {
     position: "static"
   }, /*#__PURE__*/_react.default.createElement(_Toolbar.default, null, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
     edge: "start",
@@ -65214,15 +64799,15 @@ function Header() {
     open: open,
     onClose: handleClose
   }, /*#__PURE__*/_react.default.createElement(_MenuItem.default, {
-    onClick: handleClose
-  }, "Profile"), /*#__PURE__*/_react.default.createElement(_MenuItem.default, {
+    onClick: logout
+  }, "Logout"), /*#__PURE__*/_react.default.createElement(_MenuItem.default, {
     onClick: handleClose
   }, "My account"))))));
 }
 
 const MemoHeader = (0, _react.memo)(Header);
 exports.MemoHeader = MemoHeader;
-},{"react":"../node_modules/react/index.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","@material-ui/core/AppBar":"../node_modules/@material-ui/core/esm/AppBar/index.js","@material-ui/core/Toolbar":"../node_modules/@material-ui/core/esm/Toolbar/index.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/IconButton":"../node_modules/@material-ui/core/esm/IconButton/index.js","@material-ui/icons/Menu":"../node_modules/@material-ui/icons/Menu.js","@material-ui/icons/AccountCircle":"../node_modules/@material-ui/icons/AccountCircle.js","@material-ui/core/Switch":"../node_modules/@material-ui/core/esm/Switch/index.js","@material-ui/core/FormControlLabel":"../node_modules/@material-ui/core/esm/FormControlLabel/index.js","@material-ui/core/FormGroup":"../node_modules/@material-ui/core/esm/FormGroup/index.js","@material-ui/core/MenuItem":"../node_modules/@material-ui/core/esm/MenuItem/index.js","@material-ui/core/Menu":"../node_modules/@material-ui/core/esm/Menu/index.js"}],"../node_modules/@material-ui/icons/Delete.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@material-ui/core/styles":"../node_modules/@material-ui/core/esm/styles/index.js","@material-ui/core/AppBar":"../node_modules/@material-ui/core/esm/AppBar/index.js","@material-ui/core/Toolbar":"../node_modules/@material-ui/core/esm/Toolbar/index.js","@material-ui/core/Typography":"../node_modules/@material-ui/core/esm/Typography/index.js","@material-ui/core/IconButton":"../node_modules/@material-ui/core/esm/IconButton/index.js","@material-ui/icons/Menu":"../node_modules/@material-ui/icons/Menu.js","@material-ui/icons/AccountCircle":"../node_modules/@material-ui/icons/AccountCircle.js","@material-ui/core/MenuItem":"../node_modules/@material-ui/core/esm/MenuItem/index.js","@material-ui/core/Menu":"../node_modules/@material-ui/core/esm/Menu/index.js","../config/actions":"component/config/actions/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","localforage":"../node_modules/localforage/dist/localforage.js","universal-cookie":"../node_modules/universal-cookie/es6/index.js","../Provider":"component/Provider/index.js"}],"../node_modules/@material-ui/icons/Delete.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -65298,24 +64883,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = (_ref) => {
   let {
     comment,
-    name
+    name,
+    date
   } = _ref;
   return /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true
   }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     xs: 2
-  }), /*#__PURE__*/_react.default.createElement(_Grid.default, {
-    item: true,
-    xs: 2
   }, /*#__PURE__*/_react.default.createElement(_AccountCircle.default, null)), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
-    xs: 8
-  }, /*#__PURE__*/_react.default.createElement("p", {
+    xs: 10
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/_react.default.createElement("span", {
     style: {
       fontWeight: 'bold'
     }
-  }, name), /*#__PURE__*/_react.default.createElement("p", null, comment)));
+  }, name), /*#__PURE__*/_react.default.createElement("span", null, date)), /*#__PURE__*/_react.default.createElement("p", null, comment)));
 };
 
 exports.default = _default;
@@ -65365,16 +64953,23 @@ const useStyles = (0, _styles.makeStyles)(theme => ({
   paper: {
     marginTop: 0,
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   textfield: {
     marginBottom: 10
   },
   likes: {
     display: 'flex',
-    justifyItems: 'space-evenly'
+    width: '100%',
+    justifyContent: 'space-between'
+  },
+  content: {
+    width: '100%'
+  },
+  margintop: {
+    width: '100%',
+    marginTop: 15
   }
 }));
 
@@ -65399,7 +64994,6 @@ var _default = props => {
   const [comment, setComment] = (0, _react.useState)('');
   const dateConfig = new Date(createdAt);
   const likes = Likes.find(arr => arr.UserId === userId);
-  const commentName = Comment[0] ? (0, _url.default)(Comment[0]) : null;
 
   const onChange = e => {
     setComment(e.target.value);
@@ -65414,13 +65008,10 @@ var _default = props => {
         comment
       }));
       setComment('');
-    } else {
-      console.log('post cannot be empty');
-    }
+    } else {}
   };
 
   const unlike = () => {
-    console.log('unlikw was called');
     dispatch((0, _actions.unlikeUpdate)({
       userId,
       postId: id
@@ -65428,7 +65019,6 @@ var _default = props => {
   };
 
   const likeFxn = () => {
-    console.log('likw was called');
     dispatch((0, _actions.likeUpdate)(id));
   };
 
@@ -65439,20 +65029,56 @@ var _default = props => {
     }));
   };
 
-  return /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     container: true,
     className: classes.paper
   }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
+    xl: 2,
+    lg: 2,
+    md: 2,
     xs: 2
   }, /*#__PURE__*/_react.default.createElement(_AccountCircle.default, null)), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
-    xs: 8,
+    container: true,
+    xl: 10,
+    lg: 10,
+    md: 10,
+    xs: 10,
     className: classes.header
   }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     component: "div",
     className: classes.content
-  }, /*#__PURE__*/_react.default.createElement("p", null, name), /*#__PURE__*/_react.default.createElement("p", null, posts), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: 'bold'
+    }
+  }, name), /*#__PURE__*/_react.default.createElement("span", null, dateConfig.toDateString()))))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    container: true,
+    className: classes.margintop
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    xl: 2,
+    lg: 2,
+    md: 2,
+    xs: 2
+  }), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    container: true,
+    xl: 10,
+    lg: 10,
+    md: 10,
+    xs: 10,
+    className: classes.header
+  }, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+    component: "div",
+    className: classes.content
+  }, /*#__PURE__*/_react.default.createElement("p", null, posts), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.likes
   }, likes === undefined ? /*#__PURE__*/_react.default.createElement("span", {
     onClick: likeFxn
@@ -65460,18 +65086,27 @@ var _default = props => {
     style: {
       color: '#777'
     }
-  })) : /*#__PURE__*/_react.default.createElement("span", {
+  }), Likes.length > 1 ? "".concat(Likes.length, " likes") : "".concat(Likes.length, " like")) : /*#__PURE__*/_react.default.createElement("span", {
     onClick: unlike
   }, " ", /*#__PURE__*/_react.default.createElement(_Favorite.default, {
     style: {
       color: 'red'
     }
-  })), /*#__PURE__*/_react.default.createElement("span", null, Likes.length > 1 ? "".concat(Likes.length, " likes") : "".concat(Likes.length, " like"), " "), /*#__PURE__*/_react.default.createElement("span", null, Comment.length > 1 ? "".concat(Comment.length, " comments") : "".concat(Comment.length, " comment")), userId === UserId ? /*#__PURE__*/_react.default.createElement("span", {
+  }), Likes.length > 1 ? "".concat(Likes.length, " likes") : "".concat(Likes.length, " like")), /*#__PURE__*/_react.default.createElement("span", null, Comment.length > 1 ? "".concat(Comment.length, " comments") : "".concat(Comment.length, " comment")), userId === UserId ? /*#__PURE__*/_react.default.createElement("span", {
     onClick: delPost
   }, /*#__PURE__*/_react.default.createElement(_Delete.default, null)) : null)), /*#__PURE__*/_react.default.createElement(_Typography.default, {
     component: "div",
     className: classes.content
-  }, /*#__PURE__*/_react.default.createElement("form", {
+  }, Comment.map((item, i) => {
+    let commentName = (0, _url.default)(item);
+    let date = new Date(commentName.createdAt).toDateString();
+    return /*#__PURE__*/_react.default.createElement(_CommentComp.default, {
+      key: i,
+      name: (0, _url.default)(commentName.User).name,
+      comment: commentName.comment,
+      date: date
+    });
+  }), /*#__PURE__*/_react.default.createElement("form", {
     className: classes.form,
     onSubmit: onSubmit
   }, /*#__PURE__*/_react.default.createElement(_TextField.default, {
@@ -65486,23 +65121,14 @@ var _default = props => {
     onChange: onChange,
     value: comment,
     className: classes.textfield
-  }), commentName !== null ? /*#__PURE__*/_react.default.createElement(_CommentComp.default, {
-    name: (0, _url.default)(commentName.User).name,
-    comment: commentName.comment
-  }) : null, /*#__PURE__*/_react.default.createElement(_Button.default, {
+  }), /*#__PURE__*/_react.default.createElement(_Button.default, {
     type: "submit",
     fullWidth: true,
     variant: "contained",
     color: "primary",
     className: classes.submit,
     "data-testid": "submit-button"
-  }, "Comment")))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
-    item: true,
-    xs: 1,
-    className: classes.header
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: classes.head
-  })));
+  }, "Comment"))))));
 };
 
 exports.default = _default;
@@ -65527,7 +65153,12 @@ function index() {
     state,
     dispatch
   } = (0, _Provider.useGlobalStore)();
-  return /*#__PURE__*/_react.default.createElement("div", null, state.Post.map((item, i) => /*#__PURE__*/_react.default.createElement(_Eachpost.default, {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column'
+    }
+  }, state.Post.map((item, i) => /*#__PURE__*/_react.default.createElement(_Eachpost.default, {
     item: item,
     key: i
   })));
@@ -65694,11 +65325,8 @@ var _default = () => {
       if (!Object.entries(state.User).length) {
         dispatch((0, _actions.actionCreator)(_actions.USER_DETAILS, value));
       }
-
-      console.log(value);
     }).catch(function (err) {
       // This code runs if there were any errors
-      console.log(err);
       dispatch((0, _actions.userDetails)());
     });
 
@@ -65754,8 +65382,6 @@ const App = () => {
   const {
     LoggedIn
   } = (0, _Provider.useGlobalStore)().state;
-  console.log(LoggedIn);
-  console.log((0, _Provider.useGlobalStore)().state);
   return /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_ErrorBoundary.default, {
     ui: /*#__PURE__*/_react.default.createElement("h1", null, "Something went wrong")
   }, LoggedIn === undefined || LoggedIn === _actions.LOGGEDOUT ? /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
@@ -65823,7 +65449,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58606" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54445" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

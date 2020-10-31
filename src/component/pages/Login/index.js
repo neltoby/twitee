@@ -8,6 +8,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -65,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default () => {
     const { dispatch } = useGlobalStore()
     const history = useHistory()
@@ -73,7 +79,16 @@ export default () => {
     const [ errEmail, setErrEmail] = useState(null)
     const [ errPass, setErrPass] = useState(null)
     const [ errNet, setNetErr] = useState(null)
+    const [open, setOpen] = useState(false)
     const [button_disable, setButton] = useState(false)
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+    }; 
 
     const onChange = e => {
         setInput({
@@ -88,17 +103,20 @@ export default () => {
             }else{
                 setErrPass(null)
             }
+            setOpen(false);
         }, 2000);
     }
     const validation = () => {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if(input.password.trim().length > 6) {
+        if(input.password.trim().length < 6) {
             setErrPass("Password field cannot be less than six characters");
+            setOpen(true);
             timeout()
             return false
         }
         if(!input.email || reg.test(input.email) === false) {
             setErrEmail("Email Field is Invalid");
+            setOpen(true);
             timeout(1)
             return false;
         }
@@ -117,42 +135,50 @@ export default () => {
         if(validation()){
             fetch(`${domain}twits/login`, param)
             .then(res => {
-                for (let val of res.headers.entries()){
-                    if(val[0] === 'token'){
-                        cookies.set('twit_token', val[1], { path: '/' });
-                        console.log(cookies.get('twit_token'));
-                    }else{
-                        console.log(val[1])
-                    }
-                }       
+                    
                 const response = res.json()         
                 if(res.status === 200 || res.status === 201){          
+                    for (let val of res.headers.entries()){
+                        if(val[0] === 'token'){
+                            cookies.set('twit_token', val[1], { path: '/' });
+                        }else{
+                        }
+                    }   
                     return response                   
                 }else{
-                    throw new Error(response.msg ? response.msg : 'failed network request')
+                    return response
                 }
+                // else{
+                //     throw new Error(response.msg ? response.msg : 'failed network request')
+                // }
             })
             .then(resp => {
                 const token = cookies.get('twit_token')
                 if(token !== null && token !== undefined){
                     delete resp.password
-                    console.log(resp)
                     localforage.setItem('user', resp).then(function(value) {
                         dispatch(actionCreator(LOGGEDIN))
                         dispatch(actionCreator(USER_DETAILS, resp))
                         // history.push('/')
                     }).catch(function(err) {
-                        console.log(err);
                         // implement saving to localStorage 
                     });                   
                 }else{
-                    console.log(token)
+                    console.log(resp.msg)
+                    setNetErr(resp.msg)
+                    setTimeout(() => {
+                        setOpen(false)
+                        setNetErr(null)
+                    }, 2000)
                 }
             })
             .catch(err => {
-                console.log(err)
                 // set network err 
                 setNetErr(err.message)
+                setTimeout(() => {
+                    setOpen(false)
+                    setNetErr(null)
+                }, 2000)
             })
         }
     }
@@ -227,6 +253,11 @@ export default () => {
         <Box mt={8}>
             <Copyright />
         </Box>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert severity="success">
+                {errEmail !== null ? errEmail : errPass !== null ? errPass : errNet }
+            </Alert>
+        </Snackbar>
     </Container>
     )
 }

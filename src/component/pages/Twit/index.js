@@ -30,10 +30,8 @@ export default () => {
             if(!Object.entries(state.User).length){
                 dispatch(actionCreator(USER_DETAILS, value))
             }
-            console.log(value);
         }).catch(function(err) {
             // This code runs if there were any errors
-            console.log(err);
             dispatch(userDetails())
 
         });
