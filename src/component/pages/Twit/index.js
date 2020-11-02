@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import  {useGlobalStore} from '../../Provider'
@@ -26,15 +25,24 @@ export default () => {
     const { state, dispatch } = useGlobalStore()
 
     useEffect(() => {
-        localforage.getItem('user').then(function(value) {
-            if(!Object.entries(state.User).length){
-                dispatch(actionCreator(USER_DETAILS, value))
-            }
-        }).catch(function(err) {
-            // This code runs if there were any errors
+        if(Object.entries(state.User).length < 1){
+            // localforage.getItem('user').then(function(value) {
+            //     if(!Object.entries(state.User).length){
+            //         dispatch(actionCreator(USER_DETAILS, value))
+            //     }
+            // }).catch(function(err) {
+            //     const user = JSON.parse(localStorage.getItem('user'))
+            //     if(user.constructor === Object && Object.entries(user).length > 0){
+            //         dispatch(actionCreator(USER_DETAILS, value))
+            //     }else{
+            //         // This code runs if there were any errors
+            //         dispatch(userDetails())
+            //     }
+            // });
             dispatch(userDetails())
-
-        });
+        }else{
+            console.log('its is more')
+        }
         return () => {
             
         }
@@ -47,15 +55,12 @@ export default () => {
     }, [])
 
     return (
-        <Container component="main" maxWidth="lg">
-            <Grid container spacing={2}>
-                <MemoHeader />
-                <MemoPost /> 
-                <Box mt={5}>
-                    <Copyright />
-                </Box>             
-            </Grid>
-        </Container>
-            
+        <Grid container spacing={2}>
+            <MemoHeader />
+            <MemoPost /> 
+            <Box mt={5}>
+                <Copyright />
+            </Box>             
+        </Grid>           
     )
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
+import { useHistory } from "react-router-dom"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -24,26 +24,41 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const useStyles = makeStyles((theme) => ({
+    container: {
+        justifyContent: 'stretch',
+        alignItems: 'center',
+        flex: 1, 
+        height: '90%',
+        width: '100%',   
+    },
     paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     },
     avatar: {
       margin: theme.spacing(1),
       backgroundColor: theme.palette.secondary.main,
     },
     form: {
-      width: '33%', // Fix IE 11 issue.
+      width: '50%', // Fix IE 11 issue.
       marginTop: theme.spacing(3),
       [theme.breakpoints.down('md')]: {
-        width: '90%',
+        width: '75%'
       }
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    box: {
+        alignContent: 'center',
+        justifyContent: 'center',
+        width: '100%'
+    }
   }));
 
 function Alert(props) {
@@ -52,8 +67,9 @@ function Alert(props) {
 
 export default () => {
     const classes = useStyles();
+    const history = useHistory()
     const { dispatch } = useGlobalStore()
-    const [button_disable, setDisable] = useState(false)
+    const [disabled, setDisable] = useState(false)
     const [errEmail, setErrEmail] = useState(null)
     const [errPass, setErrPass] = useState(null)
     const [errFname, setErrFname] = useState(null)
@@ -114,6 +130,7 @@ export default () => {
         e.preventDefault()
         console.log('i was called')
         if(validation()){
+            setDisable(true)
             const param = {
                 headers: {
                     'Content-Type': 'application/json'
@@ -128,13 +145,16 @@ export default () => {
                         cookies.set('twit_token', val[1], { path: '/' });
                         console.log(cookies.get('twit_token'));
                     }
-                }      
-                const response = res.json()          
-                if(res.status === 200 || res.status === 201){          
-                    return response                   
-                }else{
-                    throw new Error(response.msg ? response.msg : 'failed network request')
+                }               
+                if(res.status === 200 || res.status === 201){ 
+                    for (let val of res.headers.entries()){
+                        if(val[0] === 'token'){
+                            cookies.set('twit_token', val[1], { path: '/' });
+                            console.log(cookies.get('twit_token'));
+                        }
+                    }                                                
                 }
+                return res.json() 
             })
             .then(resp => {
                 const token = cookies.get('twit_token')
@@ -143,15 +163,33 @@ export default () => {
                     localforage.setItem('user', resp).then(function(value) {
                         dispatch(actionCreator(LOGGEDIN))
                         dispatch(actionCreator(USER_DETAILS, resp))
+                        history.push('/')           
                     }).catch(function(err) {
+                        localStorage.setItem('user', JSON.stringify(resp))
+                        dispatch(actionCreator(LOGGEDIN))
+                        dispatch(actionCreator(USER_DETAILS, resp))
+                        history.push('/')   
                         // implement saving to localStorage 
-                    })                    
+                    })                                      
+                }else{
+                    setNetErr(resp.msg)
+                    setOpen(true)
+                    setTimeout(() => {
+                        setOpen(false)
+                        setNetErr(null)
+                    }, 2000)
                 }
+                setDisable(false) 
             })
             .catch(err => {
                 console.log(err.message)
+                setDisable(false)
+                setOpen(true)
                 // set network err 
                 setNetErr(err.message)
+                setTimeout(() => {
+                    setOpen(false)
+                }, 2000);
             })
         }else{
             console.log(';validation failed')
@@ -159,8 +197,7 @@ export default () => {
     }
 
     return (
-        <Container component="main" maxWidth="xl">
-            <CssBaseline />
+        <Grid className={classes.container} container spacing={2}>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
@@ -169,10 +206,10 @@ export default () => {
                     Sign up
                 </Typography>
                 <form className={classes.form} noValidate onSubmit={onSubmit}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12}>
+
                         <TextField
                             autoComplete="fname"
+                            margin="normal"
                             name="fullname"
                             variant="outlined"
                             required
@@ -183,7 +220,6 @@ export default () => {
                             value = {input.name}
                             onChange = {onChange}
                         />
-                        </Grid>
                         {/* <Grid item xs={12} sm={6}>
                         <TextField
                             variant="outlined"
@@ -195,9 +231,9 @@ export default () => {
                             autoComplete="lname"
                         />
                         </Grid> */}
-                        <Grid item xs={12}>
                         <TextField
                             variant="outlined"
+                            margin="normal"
                             required
                             fullWidth
                             id="email"
@@ -208,10 +244,9 @@ export default () => {
                             onChange = {onChange}
                             value = {input.email}
                         />
-                        </Grid>
-                        <Grid item xs={12}>
                         <TextField
                             variant="outlined"
+                            margin="normal"
                             required
                             fullWidth
                             name="password"
@@ -222,22 +257,19 @@ export default () => {
                             onChange = {onChange}
                             value = {input.password}
                         />
-                        </Grid>
-                        <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowSignedin" color="primary" />}
                                 label="Always keep me signed in"
                             />
-                        </Grid>
-                    </Grid>
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        disabled={disabled}
                     >
-                        Sign Up
+                        {disabled ? 'Loading' : 'Sign Up'}
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
@@ -247,18 +279,16 @@ export default () => {
                         </Grid>
                     </Grid>
                 </form>
-                <Typography component='div' className={classes.typo}>               
-                    
-                </Typography>
+                
             </div>
-            <Box mt={5}>
+            <Box className={classes.box} mt={5}>
                 <Copyright />
             </Box>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert severity="success">
-                    {errEmail !== null ? errEmail : errPass !== null ? errPass : errFname }
+                    {errEmail !== null ? errEmail : errPass !== null ? errPass : errFname ? errFname : errNet }
                 </Alert>
             </Snackbar>
-        </Container>
+        </Grid>
     )
 }

@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
     // flexGrow: 1,
     width: '100%'
   },
+  menu: {
+    [theme.breakpoints.down('md')]: {
+      width: 150,
+      height: 80
+    }
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -36,7 +42,7 @@ export default function Header () {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const history = useHistory()
-  const { dispatch } = useGlobalStore()
+  const { state, dispatch } = useGlobalStore()
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -72,7 +78,7 @@ export default function Header () {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Photos
+            {state.User.name}
           </Typography>
           {auth && (
             <div>
@@ -100,8 +106,8 @@ export default function Header () {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={logout}>Logout</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem className={classes.menu} onClick={logout}>Logout</MenuItem>
+                <MenuItem className={classes.menu} onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
           )}

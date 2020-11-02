@@ -1,4 +1,5 @@
 import Cookies from 'universal-cookie';
+import localforage from 'localforage'
 import { domain } from '../url'
  
 const cookies = new Cookies();
@@ -39,26 +40,27 @@ export const userDetails = () => {
         (() => {
             const param = {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${cookies.get('twit_token')}`
                 },
                 method: 'GET',
             }
-            fetch(`${domain}user`,param)
-            .then(res => {
-                const response = res.json() 
-                if(res.status === 200 || res.status === 201){          
-                    return response                   
-                }else{
-                    throw new Error(response.msg ? response.msg : 'failed network request')
-                }
-            })
+            fetch(`${domain}twits/user`,param)
+            .then(res => res.json())
             .then(resp => {
-                delete resp.password
-                localforage.setItem('user', resp).then(function(value) {
+                if(resp.msg === undefined){
+                    delete resp.password
                     dispatch(actionCreator(USER_DETAILS, resp))
-                }).catch(function(err) {
-                    // implement saving to localStorage 
-                });
+                    localforage.setItem('user', resp, function(err, value){
+                        if(value){
+                           
+                        }else{
+                            localStorage.setItem('user', JSON.stringify(resp))
+                        }
+                    })
+                }else{
+
+                }
             })
             .catch(e => {
                 dispatch(actionCreator(NETWORK_ERR, e))   
@@ -205,7 +207,8 @@ export const allPost = () => {
                 dispatch(actionCreator(ALL_POST, resp))
             })
             .catch(e => {
-                dispatch(actionCreator(NETWORK_ERR, e))
+                dispatch(actionCreator(LOAD_POST, false))
+                dispatch(actionCreator(NETWORK_ERR, e.message))
                 timeout(dispatch)
             })
         })()
